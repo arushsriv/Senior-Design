@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css'; // Assuming you have a CSS file for styling
+import './App.css'; // Assuming CSS file for styling
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
 
   const handleLogin = () => {
-    // Add your login logic here
+    //login logic 
     console.log('Logging in with:', { username, password });
   };
 
@@ -17,13 +17,13 @@ const LoginPage = () => {
   };
 
   const handleSendEmail = () => {
-    // Add logic to send reset password email
+    // logic to send reset password email
     console.log('Sending email to:', email);
     setShowForgotPasswordModal(false);
   };
 
   const handleSignUp = () => {
-    // Add your signup navigation logic here
+    // signup navigation logic here
     console.log('Navigating to sign up page');
   };
 
