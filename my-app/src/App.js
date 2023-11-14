@@ -1,6 +1,8 @@
 // import './App.css';
 import Preferences from './Preferences';
-import Signup from './Signup';
+import Register from './Register';
+import Login from './Login';
+
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -11,7 +13,8 @@ function App() {
       <div className="App">
       <Routes>
           <Route path="/preferences" element={<Preferences />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
        </Routes>
       </div>
     </Router>
@@ -20,3 +23,4 @@ function App() {
 }
 
 export default App;
+ 
