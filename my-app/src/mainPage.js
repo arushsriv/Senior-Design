@@ -1,6 +1,6 @@
-import '../App.css';
+import './App.css';
 
-import '../css/PostLoginScreen.css'; // Create this CSS file for styling if needed
+// import '../css/PostLoginScreen.css'; // Create this CSS file for styling if needed
 import { Link } from 'react-router-dom';
 
 function mainPage() {

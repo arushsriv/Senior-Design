@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../css/cardOffers.css'; // Create this CSS file for styling if needed
+// import '../css/cardOffers.css'; // Create this CSS file for styling if needed
 
 const cardData = [
   {
