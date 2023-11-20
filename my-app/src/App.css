@@ -23,6 +23,132 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.card-offers {
+  padding: 20px;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.card-item img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card-item li {
+  margin-bottom: 5px;
+}
+
+.card-item a {
+  text-decoration: none;
+  color: #007bff; /* Link color */
+  display: block;
+  margin-top: 10px;
+}
+
+nav {
+  width: 200px;
+  background-color: #f0f0f0; /* Gray background for the left menu */
+  padding: 10px;
+}
+
+.post-logic-screen {
+  text-align: center;
+  padding: 20px;
+}
+
+.credit-card-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.credit-card-image {
+  width: 200px; /* Adjust the width as needed */
+  height: 120px; /* Adjust the height as needed */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 0 10px;
+}
+
+.gray-box {
+    background-color: #f0f0f0; /* Set your desired shade of gray */
+    padding: 20px; /* Adjust the padding as needed */
+    border-radius: 8px; /* Optional: Add border radius for rounded corners */
+    /* Additional styling can be added based on your requirements */
+  }
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  nav {
+    width: 200px;
+    background-color: #f0f0f0; /* Gray background for the left menu */
+    padding: 10px;
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  nav li {
+    margin-bottom: 10px;
+  }
+  
+  .line-delimiter {
+    border-left: 2px solid #ccc; /* Line delimiter between menu and content */
+    margin: 0 20px;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .full-width-button {
+    width: 100%;
+    padding: 10px; /* Add padding as needed */
+  }
 
 .App-link {
   color: #61dafb;
@@ -36,3 +162,4 @@
     transform: rotate(360deg);
   }
 }
+

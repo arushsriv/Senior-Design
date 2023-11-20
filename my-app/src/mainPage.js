@@ -1,23 +1,26 @@
 import './App.css';
 
-// import '../css/PostLoginScreen.css'; // Create this CSS file for styling if needed
+import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
 import { Link } from 'react-router-dom';
 
 function mainPage() {
   return (
     <div className="layout">
       <header>
-        <h1>BudGify</h1>
+        <h1>Budgify</h1>
       </header>
 
       <div className="main-content">
         <nav>
           <ul>
-            <li>Apply for credit card</li>
+            <Link to={'/'}><button>Home</button></Link>
             <br />
-            <li>Check the credit score</li>
+            <button>My Profile</button>
             <br />
-            <li>My Profile</li>
+            <Link to={'/preferences'}><button>Budget</button></Link>
+            <br />
+            <button>Point Tracker</button>
+            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
           </ul>
         </nav>
 
@@ -51,9 +54,6 @@ function mainPage() {
             </div>
           </div>
         </section>
-      </div>
-      <div>
-        <Link to={'/card-offers'}> <button  className="full-width-button"><b>Card Offers</b></button></Link>
       </div>
 
       <footer>

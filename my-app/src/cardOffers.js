@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import '../css/cardOffers.css'; // Create this CSS file for styling if needed
+import './/css/cardOffers.css'; // Create this CSS file for styling if needed
 
 const cardData = [
   {
@@ -37,19 +37,23 @@ function cardOffers() {
   return (
     <div className="layout">
       <header>
-        <h1>BudGify</h1>
+        <h1>Budgify</h1>
       </header>
 
       <div className="main-content">
-        <nav>
+      <nav>
           <ul>
-            <li>Apply for credit card</li>
+            <Link to={'/'}><button>Home</button></Link>
             <br />
-            <li>Check the credit score</li>
+            <button>My Profile</button>
             <br />
-            <li>My Profile</li>
+            <Link to={'/preferences'}><button>Budget</button></Link>
+            <br />
+            <button>Point Tracker</button>
+            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
           </ul>
         </nav>
+
 
         <div className="line-delimiter" />
 
@@ -73,10 +77,6 @@ function cardOffers() {
             </div>
           </div>
         </section>
-      </div>
-      <div>
-        <Link to={'/'}> <button className="full-width-button"><b>Home</b></button></Link>
-
       </div>
 
       <footer>
