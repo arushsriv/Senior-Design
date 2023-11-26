@@ -1,3 +1,15 @@
+# Senior-Design
+
+To connect Plaid account:
+- choose bank as Wells Fargo
+- select checkings/savings account and account/routing number
+- username: user_good
+- password: pass_good
+- get code via moble
+- code: credential_good
+- select all accounts to share (but can customize this if you want)
+- select all additional information to share (but can customize this if you want)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
