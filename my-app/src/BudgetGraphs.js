@@ -3,7 +3,7 @@ import './App.css';
 import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
 import { Link } from 'react-router-dom';
 
-function mainPage() {
+function BudgetGraphs() {
   return (
     <div className="layout">
       <header>
@@ -30,28 +30,19 @@ function mainPage() {
 
           <div className="App">
             <div className="post-login-screen">
-              <div className="gray-box">
-                <h1>Welcome John Doe</h1>
+              <div className="gray-box2">
                 <div className="credit-card-container">
-                  <img src="/images/card1.png" alt="Credit Card 1" className="credit-card-image" />
-                  <img src="/images/card2.png" alt="Credit Card 2" className="credit-card-image" />
-                  <img src="/images/card3.png" alt="Credit Card 3" className="credit-card-image" />
+                  <img src="/images/bar_chart.png" alt="Credit Card 1" className="budget-image" />
+                  <img src="/images/line_chart.png" alt="Credit Card 2" className="budget-image" />
+                  <img src="/images/pie_chart.png" alt="Credit Card 3" className="budget-image" />
                 </div>
 
-                <div className="credit-card-container">
-                  <div>
-                    <h2> People Similar to you have applied to....</h2><br/>
-                  </div>
-                </div>
-                <div className="credit-card-container">
-                  <div>
-                    <img src="/images/card4.png" alt="Credit Card 1" className="credit-card-image" />
-                    <img src="/images/card5.png" alt="Credit Card 2" className="credit-card-image" />
-                    <img src="/images/card6.png" alt="Credit Card 3" className="credit-card-image" />
-                  </div>
-                </div>
+                <p>You have 10% left in your budget for the month</p>
+                
               </div>
-              <Link to={'/card-offers'}><button>Recommend me a card</button></Link>
+              <Link to={'/preferences'}><button>Preferences</button></Link>
+              <button>Create New Budget</button>
+              <Link to={'/breakdown'}><button>Monthly Budget Breakdown</button></Link>
             </div>
           </div>
         </section>
@@ -69,4 +60,4 @@ function mainPage() {
   );
 }
 
-export default mainPage;
+export default BudgetGraphs;

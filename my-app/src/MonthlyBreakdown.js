@@ -5,35 +5,32 @@ import './/css/cardOffers.css'; // Create this CSS file for styling if needed
 const cardData = [
   {
     id: 1,
-    cardName: 'Card 3',
-    cardImage: '/images/card3.png',
-    feature1: 'Feature 3A',
-    feature2: 'Feature 3B',
-    feature3: 'Feature 3C',
-    feature4: 'Feature 3D',
+    cardName: 'Shopping',
+    feature1: 'Detail 3A',
+    feature2: 'Detail 3B',
+    feature3: 'Detail 3C',
+    feature4: 'Detail 3D',
   },
   {
     id: 2,
-    cardName: 'Card 4',
-    cardImage: '/images/card4.png',
-    feature1: 'Feature 4A',
-    feature2: 'Feature 4B',
-    feature3: 'Feature 4C',
-    feature4: 'Feature 4D',
+    cardName: 'Dining',
+    feature1: 'Detail 4A',
+    feature2: 'Detail 4B',
+    feature3: 'Detail 4C',
+    feature4: 'Detail 4D',
   },
   {
     id: 3,
-    cardName: 'Card 5',
-    cardImage: '/images/card5.png',
-    feature1: 'Feature 5A',
-    feature2: 'Feature 5B',
-    feature3: 'Feature 5C',
-    feature4: 'Feature 5D',
+    cardName: 'Grocery',
+    feature1: 'Detail 5A',
+    feature2: 'Detail 5B',
+    feature3: 'Detail 5C',
+    feature4: 'Detail 5D',
   },
   // Add more card data as needed
 ];
 
-function cardOffers() {
+function MonthlyBreakdown() {
   return (
     <div className="layout">
       <header>
@@ -59,11 +56,10 @@ function cardOffers() {
 
         <section className="content">
           <div className="card-offers">
-            <h1>Card Offers</h1>
+            <h1>Monthly Category Breakdown</h1>
             <div className="card-list">
               {cardData.map((card) => (
                 <div key={card.id} className="card-item">
-                  <img src={card.cardImage} alt={card.cardName} />
                   <h2>{card.cardName}</h2>
                   <ul>
                     <li>{card.feature1}</li>
@@ -99,4 +95,4 @@ function cardOffers() {
   );
 }
 
-export default cardOffers;
+export default MonthlyBreakdown;
