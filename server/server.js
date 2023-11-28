@@ -136,6 +136,53 @@ app.post('/updatebudget', async (req, resp) => {
   }
 })
 
+// Goals
+app.get('/getgoals/:username', async (req, resp) => {
+  if (!req.params.username) {
+      return resp.status(404).json({ error: 'username not provided' });
+  }
+  try {
+    const result = await lib.getGoals(db, req.params.username);
+    return resp.status(200).json({ data: result });
+  } catch (err) {
+    return resp.status(500).json({ error: `try again later with ${err}` });
+  }
+});
+
+app.post('/addgoal', async (req, resp) => {
+  if (!req.body.username || !req.body.goal) {
+    return resp.status(404).json({ error: 'not all data points inputted' });
+  } try {
+    await lib.addGoal(db, req.body.username, req.body.goal); 
+    return resp.status(201).json({ message: `Goal successfully submitted for user with username ${req.body.username}` });
+  } catch (err) {
+    return resp.status(500).json({ error: `try again later with ${err}`});
+  }
+})
+
+// Credit cards
+app.get('/getcreditcards/:username', async (req, resp) => {
+  if (!req.params.username) {
+      return resp.status(404).json({ error: 'username not provided' });
+  }
+  try {
+    const result = await lib.getCreditCards(db, req.params.username);
+    return resp.status(200).json({ data: result });
+  } catch (err) {
+    return resp.status(500).json({ error: `try again later with ${err}` });
+  }
+});
+
+app.post('/addcreditcard', async (req, resp) => {
+  if (!req.body.username || !req.body.credit_card) {
+    return resp.status(404).json({ error: 'not all data points inputted' });
+  } try {
+    await lib.addCreditCard(db, req.body.username, req.body.credit_card); 
+    return resp.status(201).json({ message: `Credit card successfully submitted for user with username ${req.body.username}` });
+  } catch (err) {
+    return resp.status(500).json({ error: `try again later with ${err}`});
+  }
+})
 
 const port = 8000;
 
