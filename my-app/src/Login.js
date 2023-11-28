@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { validateLogin } from './loginRegisterAPI';
 import './App.css';
+import './css/login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -50,6 +51,7 @@ function Login() {
   return (
     <div className="loginApp">
       <div className="auth-form-container">
+      <h1 className="app-title">Budgify</h1>
         <h1 className="app-title">Login Here</h1>
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="username">

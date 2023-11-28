@@ -2,6 +2,7 @@ import {useState} from "react";
 import "./index.css";
 
 function Preferences () {
+  
   const [state, setState] = useState({
     fname: "",
     lname: "",
@@ -117,7 +118,9 @@ function Preferences () {
   };
 
   return (
+    
     <>
+
       <h1>Controlled Form</h1>
       <form onSubmit={handleSubmit}>
         {/* <label>
