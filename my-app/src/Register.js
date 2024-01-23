@@ -48,6 +48,28 @@ function Register() {
   };
 
   async function displayRegister(obj) {
+    // try {
+    //   const response = await fetch('http://localhost:800/adduser', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(obj)
+    //   });
+      
+    //   const res = await response.json()
+    //   if (res.error) {
+    //     toast.error('Failed: ${res.error}');
+    //   } else {
+    //     toast.success("Registered!");
+    //     window.location.href = '/login';
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    //   toast.error("Registration failed. Please try again.");
+    // }
+
+
     const res = await createUser(obj);
     console.log('RES', res);
     if (res.error) {
