@@ -15,7 +15,7 @@ function BudgetGraphs() {
           <ul>
             <Link to={'/home'}><button>Home</button></Link>
             <br />
-            <button>My Profile</button>
+            <Link to={'/profile'}><button>My Profile</button> </Link>
             <br />
             <Link to={'/budget'}><button>Budget</button></Link>
             <br />
@@ -41,7 +41,7 @@ function BudgetGraphs() {
                 
               </div>
               <Link to={'/preferences'}><button>Preferences</button></Link>
-              <button>Create New Budget</button>
+              <Link to={'/new-budget'}><button>Create New Budget</button></Link>
               <Link to={'/breakdown'}><button>Monthly Budget Breakdown</button></Link>
             </div>
           </div>

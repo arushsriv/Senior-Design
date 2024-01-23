@@ -1,5 +1,7 @@
 import {useState} from "react";
 import "./index.css";
+import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
+import { Link } from 'react-router-dom';
 
 function Preferences () {
   
@@ -120,8 +122,21 @@ function Preferences () {
   return (
     
     <>
-
+    <nav>
+          <ul>
+            <Link to={'/home'}><button>Home</button></Link>
+            <br />
+            <button>My Profile</button>
+            <br />
+            <Link to={'/budget'}><button>Budget</button></Link>
+            <br />
+            <button>Point Tracker</button>
+            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
+          </ul>
+        </nav>
+        <div className="post-login-screen"> </div>
       <h1>Controlled Form</h1>
+      
       <form onSubmit={handleSubmit}>
         {/* <label>
           First Name:{" "}

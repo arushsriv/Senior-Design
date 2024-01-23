@@ -42,7 +42,7 @@ function MonthlyBreakdown() {
           <ul>
             <Link to={'/home'}><button>Home</button></Link>
             <br />
-            <button>My Profile</button>
+            <Link to={'/profile'}><button>My Profile</button> </Link>
             <br />
             <Link to={'/budget'}><button>Budget</button></Link>
             <br />
