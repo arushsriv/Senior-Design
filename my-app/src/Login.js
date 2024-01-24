@@ -12,20 +12,20 @@ function Login() {
     sessionStorage.clear();
   }, []);
 
-  async function displayLogin() {
-    const resp = await validateLogin(username);
-    if (resp.error) {
-      toast.error(resp.error.message);
-    } else if (Object.keys(resp).length === 0) {
-      toast.error('Invalid username');
-    } else if (resp.password === password) {
-      toast.success('login successful');
-      sessionStorage.setItem('username', username);
-      window.location.href = `/user/${username}`;
-    } else {
-      toast.error('Invalid password');
-    }
-  }
+  // async function displayLogin() {
+  //   const resp = await validateLogin(username);
+  //   if (resp.error) {
+  //     toast.error(resp.error.message);
+  //   } else if (Object.keys(resp).length === 0) {
+  //     toast.error('Invalid username');
+  //   } else if (resp.password === password) {
+  //     toast.success('login successful');
+  //     sessionStorage.setItem('username', username);
+  //     window.location.href = `/user/${username}`;
+  //   } else {
+  //     toast.error('Invalid password');
+  //   }
+  // }
 
   const validate = () => {
     let result = true;
@@ -43,7 +43,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      displayLogin();
+      // displayLogin();
       // console.log("LOGIN RSP", resp);
     }
   };
@@ -65,7 +65,9 @@ function Login() {
             <input className="loginInput" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" id="password" name="password" />
           </label>
 
-          <button data-testid="submitButton" className="loginButton" type="submit">Login</button>
+          <a href="/home">
+            <button type="button" className="loginButton link-button">Login</button>
+          </a>
 
         </form>
 
