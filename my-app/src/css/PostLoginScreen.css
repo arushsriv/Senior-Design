@@ -16,10 +16,25 @@
     border-radius: 8px;
     margin: 0 10px;
   }
+
+  .budget-image {
+    width: 300px; /* Adjust the width as needed */
+    height: 240px; /* Adjust the height as needed */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 0 10px;
+  }
   
   .gray-box {
       background-color: #f0f0f0; /* Set your desired shade of gray */
       padding: 20px; /* Adjust the padding as needed */
+      border-radius: 8px; /* Optional: Add border radius for rounded corners */
+      /* Additional styling can be added based on your requirements */
+    }
+
+    .gray-box2 {
+      background-color: #f0f0f0; /* Set your desired shade of gray */
+      padding: 80px; /* Adjust the padding as needed */
       border-radius: 8px; /* Optional: Add border radius for rounded corners */
       /* Additional styling can be added based on your requirements */
     }

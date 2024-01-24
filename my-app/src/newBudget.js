@@ -3,7 +3,16 @@ import './App.css';
 import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
 import { Link } from 'react-router-dom';
 
-function mainPage() {
+function NewBudget() {
+    const cardData = [
+        {
+          id: 1,
+          cardName: 'Budget',
+          feature1: 'Shopping: $100',
+          feature2: 'Restaurant: $100',
+          feature3: 'Travel: $50',
+          feature4: 'Clubs: $100',
+        }]
   return (
     <div className="layout">
       <header>
@@ -30,28 +39,25 @@ function mainPage() {
 
           <div className="App">
             <div className="post-login-screen">
-              <div className="gray-box">
-                <h1>Welcome John Doe</h1>
+              <div className="gray-box2">
                 <div className="credit-card-container">
-                  <img src="/images/card1.png" alt="Credit Card 1" className="credit-card-image" />
-                  <img src="/images/card2.png" alt="Credit Card 2" className="credit-card-image" />
-                  <img src="/images/card3.png" alt="Credit Card 3" className="credit-card-image" />
+                  <img src="/images/pie_chart.png" alt="Credit Card 3" className="budget-image" />
                 </div>
-
-                <div className="credit-card-container">
-                  <div>
-                    <h2> People Similar to you have applied to....</h2><br/>
-                  </div>
+                <div className="card-list">
+              {cardData.map((card) => (
+                <div key={card.id} className="card-item">
+                  <h2>{card.cardName}</h2>
+                  <ul>
+                    <li>{card.feature1}</li>
+                    <li>{card.feature2}</li>
+                    <li>{card.feature3}</li>
+                    <li>{card.feature4}</li>
+                </ul>
                 </div>
-                <div className="credit-card-container">
-                  <div>
-                    <img src="/images/card4.png" alt="Credit Card 1" className="credit-card-image" />
-                    <img src="/images/card5.png" alt="Credit Card 2" className="credit-card-image" />
-                    <img src="/images/card6.png" alt="Credit Card 3" className="credit-card-image" />
-                  </div>
-                </div>
+              ))}
               </div>
-              <Link to={'/card-offers'}><button>Recommend me a card</button></Link>
+              <Link to={'/budget'}><button>Back</button></Link>
+              </div>
             </div>
           </div>
         </section>
@@ -69,4 +75,4 @@ function mainPage() {
   );
 }
 
-export default mainPage;
+export default NewBudget;

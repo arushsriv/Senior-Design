@@ -153,7 +153,7 @@ function Register() {
           <button data-testid="submitButton" className="loginButton" type="submit">Sign Up</button>
 
         </form>
-        <a href="/login">
+        <a href="/">
           <button data-testid="login" type="button" className="loginButton link-button">Already have an Account? Sign in</button>
         </a>
 
