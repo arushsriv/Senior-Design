@@ -1,14 +1,14 @@
 const { MongoClient } = require('mongodb');
 
 const connect = async (url) => {
-  try {
-    const con = (await MongoClient.connect(url, {
-      useNewUrlParser: true, useUnifiedTopology: true})).db();
-      console.log("Connected to database");
-      return con;
- } catch (err) {
-    throw new Error(`cannot connect to the database with ${err}`);
-  }
+    try {
+        const con = (await MongoClient.connect(url, {
+            useNewUrlParser: true, useUnifiedTopology: true})).db();
+            console.log("Connected to database");
+            return con;
+    } catch (err) {
+        throw new Error(`cannot connect to the database with ${err}`);
+    }
 }; 
 
 // User
@@ -16,7 +16,7 @@ const addUser = async (db, newUser, username) => {
     newUser._id = username;
     try {
         const result = await db.collection('users').insertOne(newUser);
-        return result;
+        return result;
     } catch (err) {
         throw new Error('cannot add new user');
     }
@@ -25,9 +25,9 @@ const addUser = async (db, newUser, username) => {
 async function getUser(db, username) {
     try {
         const result = await db.collection('users').findOne({ _id: username});
-        return result;
+        return result;
     } catch (err) {
-        throw new Error(`cannot get user with ${err}`);
+        throw new Error(`cannot get user with ${err}`);
     }
 }
 
@@ -109,33 +109,33 @@ module.exports = {
 }; 
 
 const main = async() => {
+    
+    const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
+    
+    const newUser = new Object();
+    newUser.username = "juliawang"
+    newUser.password = "password"
+    newUser.first_name = "Julia"
+    newUser.last_name = "Wang"
+    newUser.email = "juliawang143@gmail.com"
+    await addUser(db, newUser, newUser.username)
 
-        const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
+    const preferences = new Object();
+    preferences.occupation = "SWE"
+    preferences.income = "<$10,000"
+    preferences.age = "18-25"
+    preferences.categories = ["Transportation", "Rent"]
+    preferences.notifications = "weekly"
+    await addPreferences(db, newUser.username, preferences)
 
-        const newUser = new Object(); 
-        newUser.username = "juliawang"
-        newUser.password = "password"
-        newUser.first_name = "Julia"
-        newUser.last_name = "Wang"
-        newUser.email = "juliawang143@gmail.com"
-        await addUser(db, newUser, newUser.username)
+    // const categories = ["Food"]
+    // await updateCategories(db, newUser.username, categories)
 
-        const preferences = new Object();
-        preferences.occupation = "SWE"
-        preferences.income = "<$10,000"
-        preferences.age = "18-25"
-        preferences.categories = ["Transportation", "Rent"]
-        preferences.notifications = "weekly"
-        await addPreferences(db, newUser.username, preferences)
+    const budget = {"transportation": "10,000", "rent": "20,000"}
+    await addBudget(db, newUser.username, budget)
 
-        // const categories = ["Food"]
-        // await updateCategories(db, newUser.username, categories)
-
-        const budget = {"transportation": "10,000", "rent": "20,000"}
-        await addBudget(db, newUser.username, budget)
-
-        const newBudget = {"transportation": "20,000", "rent": "10,000"}
-        await updateBudget(db, newUser.username, newBudget)
+    const newBudget = {"transportation": "20,000", "rent": "10,000"}
+    await updateBudget(db, newUser.username, newBudget)
 
 }; 
     
