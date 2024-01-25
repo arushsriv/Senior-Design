@@ -17,7 +17,21 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req, resp) => resp.json({ message: 'Welcome to Budgify!' }));
+// app.get('/', (req, resp) => resp.json({ message: 'Welcome to Budgify!' }))
+
+app.get('/home/:username', async (req, resp) => {
+  if (!req.params.username) {
+    return resp.status(404).json({ error: 'username not provided' });
+  }
+  try {
+    const result = await lib.getUser(db, req.params.username);
+    console.log(username);
+    return resp.json({ message: `Welcome to Budgify ${username} !` })
+  } catch (err) {
+    return resp.status(500).json({ error: `try again later with ${err}` });
+  }
+});
+
 
 // User
 app.post('/adduser', async (req, resp) => {

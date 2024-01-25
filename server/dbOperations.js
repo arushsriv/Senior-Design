@@ -1,3 +1,5 @@
+// import { username } from '../Login.js';
+
 const { MongoClient } = require('mongodb');
 
 const connect = async (url) => {
@@ -19,6 +21,15 @@ const addUser = async (db, newUser, username) => {
         return result;
     } catch (err) {
         throw new Error('cannot add new user');
+    }
+}
+
+async function home(db, username) {
+    try {
+        const result = await db.collection('users').findOne({_id: username});
+        return result;
+    } catch (err) {
+        throw new Error(`cannot get user with ${err}`);
     }
 }
 
@@ -105,7 +116,8 @@ module.exports = {
     updateCategories,
     getBudget,
     addBudget,
-    updateBudget
+    updateBudget,
+    home
 }; 
 
 const main = async() => {
@@ -114,7 +126,7 @@ const main = async() => {
     
     const newUser = new Object();
     newUser.username = "juliawang"
-    newUser.password = "password"
+    newUser.password = "password";
     newUser.first_name = "Julia"
     newUser.last_name = "Wang"
     newUser.email = "juliawang143@gmail.com"

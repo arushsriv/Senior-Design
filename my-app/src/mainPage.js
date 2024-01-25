@@ -1,13 +1,32 @@
 import './App.css';
-
+import React, { useEffect, useState } from 'react';
 import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
 import { Link } from 'react-router-dom';
+const config = require('./config.json');
 
-function mainPage() {
+// function mainPage() {
+export default function MainPage({ username }) {
+  const [user, setUser] = useState('');
+
+  // const search = () => {
+  //   fetch(`http://${config.server_host}:${config.server_port}/home?username=${username}`)
+  //     .then(res => res.json())
+  //     .then(resJson => setUser(resJson));
+  // }
+
+  useEffect(() => {
+    fetch(`http://${config.server_host}:${config.server_port}/home?username=${username}`)
+      .then(res => res.json())
+      .then(resJson => setUser(resJson));
+  }, []);
+
+
+  console.log(user)
+
   return (
     <div className="layout">
       <header>
-        <h1>Budgify</h1>
+        <h1>Welcome to Budgify {username}! </h1>
       </header>
 
       <div className="main-content">
@@ -69,4 +88,4 @@ function mainPage() {
   );
 }
 
-export default mainPage;
+// export default mainPage;
