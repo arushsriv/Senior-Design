@@ -4,15 +4,9 @@ import './/css/PostLoginScreen.css'; // Create this CSS file for styling if need
 import { Link } from 'react-router-dom';
 const config = require('./config.json');
 
-// function mainPage() {
 export default function MainPage({ username }) {
   const [user, setUser] = useState('');
-
-  // const search = () => {
-  //   fetch(`http://${config.server_host}:${config.server_port}/home?username=${username}`)
-  //     .then(res => res.json())
-  //     .then(resJson => setUser(resJson));
-  // }
+  console.log("username is: ", username);
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/home?username=${username}`)
@@ -50,7 +44,7 @@ export default function MainPage({ username }) {
           <div className="App">
             <div className="post-login-screen">
               <div className="gray-box">
-                <h1>Welcome John Doe</h1>
+                <h1>Welcome {username}</h1>
                 <div className="credit-card-container">
                   <img src="/images/card1.png" alt="Credit Card 1" className="credit-card-image" />
                   <img src="/images/card2.png" alt="Credit Card 2" className="credit-card-image" />
@@ -87,5 +81,3 @@ export default function MainPage({ username }) {
 
   );
 }
-
-// export default mainPage;
