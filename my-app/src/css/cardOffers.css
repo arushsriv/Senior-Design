@@ -1,5 +1,5 @@
 .card-offers {
-    padding: 20px;
+    padding: 5px;
   }
   
   .card-list {
@@ -28,7 +28,7 @@
   }
   
   .card-item li {
-    margin-bottom: 5px;
+    margin-bottom: 1px;
   }
   
   .card-item a {

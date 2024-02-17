@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { createUser } from './loginRegisterAPI';
+import  ".//css/register.css";
 
 function Register() {
   const [id, setId] = useState('');
@@ -69,72 +70,29 @@ function Register() {
   };
 
   return (
-    <div className="loginApp">
-      <div className="auth-form-container">
-        <form className="register-form" onSubmit={handleSubmit}>
-          <label htmlFor="firstName">
-            First Name
-            <input
-              className="loginInput"
-              required
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-                        // id="firstName"
-              placeholder="John"
-            />
-          </label>
-          <label htmlFor="lastName">
-            Last Name
-            <input
-              className="loginInput"
-              required
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-                    // id="lastName"
-              placeholder="Doe"
-            />
-          </label>
-          <label htmlFor="email">
-            Email
-            <input
-              className="loginInput"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-                    // id="email"
-              placeholder="email"
-            />
-          </label>
-          <br />
-          <label htmlFor="username">
-            Username
-            <input
-              className="loginInput"
-              required
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              placeholder="username"
-            />
-          </label>
-          <label htmlFor="password">
-            Password
-            <input
-              className="loginInput"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              placeholder="password"
-            />
-          </label>
-          <br />
-          <button data-testid="submitButton" className="loginButton" type="submit">Sign Up</button>
-
-        </form>
-        <a href="/">
-          <button data-testid="login" type="button" className="loginButton link-button">Already have an Account? Sign in</button>
-        </a>
-
+    <div className="register" onSubmit={handleSubmit}>
+      <div className="div">
+        <div className="text-wrapper">Budgify Sign Up</div>
+        <div className="frame">
+          <input className="email" type="username" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
+        </div>
+        <div className="email-wrapper">
+          <input className="email" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name' />
+        </div>
+        <div className="input-wrapper">
+          <input className="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email'/>
+        </div>
+        <div className="frame-2">
+          <input className="email" value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Password'/>
+        </div>
+        <div className="div-wrapper">
+        <button className="signup" type="submit">Sign Up</button>
+        </div>
+        <div className="frame-3">
+          <a href='/'>
+          <button className="p">Already have an account? Login</button>
+          </a>
+        </div>
       </div>
     </div>
   );

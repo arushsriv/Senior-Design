@@ -92,6 +92,141 @@ const updateBudget = async (db, username, budget) => {
         throw new Error(`cannot update budget for user ${username}`);
     }
 }
+async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
+  const transactionsCollection = db.collection('transactions');
+
+  const top5PerCategoryItem = await transactionsCollection.aggregate([
+    {
+      $addFields: {
+        transaction_date: {
+          $cond: {
+            if: { $eq: [{ $type: '$transaction_date' }, 'string'] },
+            then: { $toDate: '$transaction_date' },
+            else: '$transaction_date',
+          },
+        },
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $and: [
+            { $eq: [{ $year: '$transaction_date' }, desiredMonth.getFullYear()] },
+            { $eq: [{ $month: '$transaction_date' }, desiredMonth.getMonth() + 1] },
+          ],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          Category: '$Category',
+          Description: '$Description',
+        },
+        transactions: { $push: '$$ROOT' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        Category: '$_id.Category',
+        Description: '$_id.Description',
+        transactions: '$transactions',
+        combo: { $concat: ['$_id.Category', ' - ', '$_id.Description'] }, // Unique combination of Category and Description
+      },
+    },
+    {
+      $group: {
+        _id: '$Category',
+        categoryData: { $push: '$$ROOT' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        Category: '$_id',
+        transactions: {
+          $slice: ['$categoryData.transactions', 5], // Get the top 5 transactions per category
+        },
+      },
+    },
+  ]).toArray();
+
+  console.log(top5PerCategoryItem);
+
+  return top5PerCategoryItem;
+}
+
+
+  
+  async function predictSpendingWithBudget(db, desiredMonth, overallBudget, scalingFactor = 0.8) {
+    const transactionsCollection = db.collection('transactions');
+  
+    // Convert desiredMonth to a MongoDB query
+    const monthQuery = {
+      $eq: [{ $month: '$transaction_date' }, desiredMonth.getMonth() + 1], // Months are zero-based in JavaScript Date object
+    };
+  
+    // Filter transactions based on the desired month
+    const monthlySpending = await transactionsCollection
+      .aggregate([
+        {
+          $match: { transaction_date: monthQuery },
+        },
+        {
+          $group: {
+            _id: '$Category',
+            totalDebit: { $sum: '$Debit' },
+          },
+        },
+      ])
+      .toArray();
+  
+    // Train a linear regression model for each category
+    const models = {};
+    for (const categoryData of monthlySpending) {
+      const category = categoryData._id;
+      const categoryDataPoints = await transactionsCollection
+        .aggregate([
+          {
+            $match: { Category: category },
+          },
+          {
+            $group: {
+              _id: { $month: '$transaction_date' },
+              totalDebit: { $sum: '$Debit' },
+            },
+          },
+        ])
+        .toArray();
+  
+      const X = categoryDataPoints.map((dataPoint) => [dataPoint._id]); // Months
+      const y = categoryDataPoints.map((dataPoint) => dataPoint.totalDebit / overallBudget); // Normalize to percentage of overall budget
+  
+      const net = new brain.recurrent.GRUTimeStep();
+      net.train(X, y);
+  
+      models[category] = net;
+    }
+  
+    // Make predictions for the desired month with the scaling factor
+    const predictions = {};
+    for (const [category, model] of Object.entries(models)) {
+      const XDesired = [desiredMonth.getMonth() + 1]; // Months
+      const predictedPercentage = model.run(XDesired)[0];
+      const scaledPrediction = Math.max(predictedPercentage * scalingFactor, 0.0); // Set a minimum value of 0
+      predictions[category] = scaledPrediction * overallBudget; // Convert back to actual spending
+    }
+  
+    const output = {};
+    for (const [category, prediction] of Object.entries(predictions)) {
+      output[category] = parseFloat(prediction.toFixed(2));
+    }
+  
+    return output;
+  }
+  
+
 
 // TOOD enums for notification frequency, etc.
 
@@ -105,37 +240,39 @@ module.exports = {
     updateCategories,
     getBudget,
     addBudget,
-    updateBudget
+    updateBudget,
+    getTop5AmountsPerCategoryItem,
+    predictSpendingWithBudget
 }; 
 
 const main = async() => {
 
-        const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
+    //     const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
 
-        const newUser = new Object(); 
-        newUser.username = "juliawang"
-        newUser.password = "password"
-        newUser.first_name = "Julia"
-        newUser.last_name = "Wang"
-        newUser.email = "juliawang143@gmail.com"
-        await addUser(db, newUser, newUser.username)
+    //     const newUser = new Object(); 
+    //     newUser.username = "juliawang"
+    //     newUser.password = "password"
+    //     newUser.first_name = "Julia"
+    //     newUser.last_name = "Wang"
+    //     newUser.email = "juliawang143@gmail.com"
+    //     await addUser(db, newUser, newUser.username)
 
-        const preferences = new Object();
-        preferences.occupation = "SWE"
-        preferences.income = "<$10,000"
-        preferences.age = "18-25"
-        preferences.categories = ["Transportation", "Rent"]
-        preferences.notifications = "weekly"
-        await addPreferences(db, newUser.username, preferences)
+    //     const preferences = new Object();
+    //     preferences.occupation = "SWE"
+    //     preferences.income = "<$10,000"
+    //     preferences.age = "18-25"
+    //     preferences.categories = ["Transportation", "Rent"]
+    //     preferences.notifications = "weekly"
+    //     await addPreferences(db, newUser.username, preferences)
 
-        // const categories = ["Food"]
-        // await updateCategories(db, newUser.username, categories)
+    //     // const categories = ["Food"]
+    //     // await updateCategories(db, newUser.username, categories)
 
-        const budget = {"transportation": "10,000", "rent": "20,000"}
-        await addBudget(db, newUser.username, budget)
+    //     const budget = {"transportation": "10,000", "rent": "20,000"}
+    //     await addBudget(db, newUser.username, budget)
 
-        const newBudget = {"transportation": "20,000", "rent": "10,000"}
-        await updateBudget(db, newUser.username, newBudget)
+    //     const newBudget = {"transportation": "20,000", "rent": "10,000"}
+    //     await updateBudget(db, newUser.username, newBudget)
 
 }; 
     

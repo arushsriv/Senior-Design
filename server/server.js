@@ -136,6 +136,37 @@ app.post('/updatebudget', async (req, resp) => {
   }
 })
 
+// Get top 5 amounts per category item endpoint
+app.get('/top5/:month', async (req, res) => {
+  try {
+
+    const desiredMonth = new Date(req.params.month); // Assuming req.params.month is a string like '2024-02-01'
+    const top5Data = await lib.getTop5AmountsPerCategoryItem(db, desiredMonth);
+
+    res.json({ top5Data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Predict spending with budget endpoint
+app.post('/predict', async (req, res) => {
+  try {
+
+    const desiredMonth = new Date(req.body.desiredMonth); // Assuming req.body.desiredMonth is a string like '2024-02-01'
+    const overallBudget = req.body.overallBudget || 400; // Default overall budget to 400 if not provided
+    const predictions = await lib.predictSpendingWithBudget(db, desiredMonth, overallBudget);
+
+    res.json({ predictions });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  } finally {
+    await client.close();
+  }
+});
+
 
 const port = 8000;
 

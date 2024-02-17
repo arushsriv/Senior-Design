@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { validateLogin } from './loginRegisterAPI';
+import  ".//css/login.css";
 import './App.css';
-import './css/login.css';
+
+
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -47,37 +49,31 @@ function Login() {
       // console.log("LOGIN RSP", resp);
     }
   };
-
-  return (
-    <div className="loginApp">
-      <div className="auth-form-container">
-      <h1 className="app-title">Budgify</h1>
-        <h1 className="app-title">Login Here</h1>
-        <form className="login-form" onSubmit={handleSubmit}>
-          <label htmlFor="username">
-            Username
-            <input className="loginInput" value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="username" id="username" name="username" />
-
-          </label>
-          <br />
-          <label htmlFor="password">
-            Password
-            <input className="loginInput" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" id="password" name="password" />
-          </label>
-
-          <button data-testid="submitButton" className="loginButton" type="submit">Login</button>
-
-        </form>
-
-        <a href="/register">
-          <button type="button" className="loginButton link-button">Register</button>
-        </a>
-
-        <button type="button" className="loginButton password-button">Forgot Password</button>
-
-      </div>
-    </div>
-  );
+      return (
+        <div className="index" onSubmit={handleSubmit}>
+          <div className="div">
+            <div className="text-wrapper">Budgify</div>
+            <div className="text-wrapper-2"><button type="button"> Forgot Password? </button></div>
+            <div className="text-wrapper-3">Email</div>
+            <div className="text-wrapper-4">Password</div>
+            
+            <div className="div-wrapper2">
+            <button className="text-wrapper-5" type="submit">Login</button>
+            </div>
+            <div className="div-wrapper">
+            <a href="/register">
+            <button className="text-wrapper-5" >Sign Up</button>
+            </a>
+            </div>
+            <div className="frame-2">
+              <input className="text-wrapper-7" value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder='123@abc.com' id="username" name="username"/>
+            </div>
+            <div className="password-wrapper">
+              <input className="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder='password' id="password" name="password"/>
+            </div>
+          </div>
+        </div>
+      );
 }
 
 export default Login;

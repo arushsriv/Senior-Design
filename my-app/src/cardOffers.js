@@ -45,11 +45,16 @@ function cardOffers() {
           <ul>
             <Link to={'/home'}><button>Home</button></Link>
             <br />
-            <button>My Profile</button>
+            <br />
+            <Link to={'/profile'}><button>My Profile</button> </Link>
+            <br />
             <br />
             <Link to={'/budget'}><button>Budget</button></Link>
             <br />
+            <br />
             <button>Point Tracker</button>
+            <br />
+            <br />
             <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
           </ul>
         </nav>
