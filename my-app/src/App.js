@@ -6,6 +6,7 @@ import CardOffers from './cardOffers';
 import MainPage from './MainPage';
 import MonthlyBreakdown from './MonthlyBreakdown';
 import Profile from './Profile';
+import Plaid from './Plaid';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BudgetGraphs from './BudgetGraphs';
@@ -25,6 +26,7 @@ function App() {
           <Route path="/breakdown" element={<MonthlyBreakdown />} />
           <Route path="/home" element={<MainPage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/plaid" element={<Plaid />} />
           <Route path="/new-budget" element={<NewBudget />} />
        </Routes>
       </div>

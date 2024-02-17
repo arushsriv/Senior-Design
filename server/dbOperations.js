@@ -125,7 +125,7 @@ const main = async() => {
     const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
     
     const newUser = new Object();
-    newUser.username = "juliawang"
+    newUser.username = "julia";
     newUser.password = "password";
     newUser.first_name = "Julia"
     newUser.last_name = "Wang"
