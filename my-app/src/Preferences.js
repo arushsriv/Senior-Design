@@ -42,7 +42,11 @@ function Preferences() {
     categories: [],
     notifications: [],
     gender: "",
-    price: 0
+    price: 0,
+    fee_pref: "",
+    debt_income_ratio: 0,
+    bonus: "",
+    number_cc: ""
   });
 
 
@@ -55,6 +59,31 @@ function Preferences() {
   const incomesOptions = incomes.map((income, key) => (
     <option value={income} key={key}>
       {income}
+    </option>
+  ));
+
+  const debt_income_ratiosOptions = debt_income_ratio.map((debt_income_ratio, key) => (
+    <option value={debt_income_ratio} key={key}>
+      {debt_income_ratio}
+    </option>
+  ));
+
+  const bonusOptions = bonus.map((bonus, key) => (
+    <option value={bonus} key={key}>
+      {bonus}
+    </option>
+  ));
+
+  const number_ccOptions = number_cc.map((number_cc, key) => (
+    <option value={number_cc} key={key}>
+      {number_cc}
+    </option>
+  ));
+
+
+  const fee_prefOptions = fee_pref.map((fee_pref, key) => (
+    <option value={fee_pref} key={key}>
+      {fee_pref}
     </option>
   ));
 
@@ -143,131 +172,196 @@ function Preferences() {
                 <div className="grid-container">
                   <div className="grid-item">
                     <div className="credit-card-container">
-                      <div>
-                        <table className="custom-table">
-                          <tbody>
-                            <tr>
-                              <td><label>Future Goal:</label></td>
-                              <td><textarea name="future_goal" onChange={handleChange} /></td>
-                            </tr>
-                            <tr>
-                              <td><label>Savings Goal:</label></td>
-                              <td><textarea name="savings_goal" onChange={handleChange} /></td>
-                            </tr>
-                            <tr>
-                              <td><label>Occupation:</label></td>
-                              <td><select
-                                name="occupation"
-                                value={state.occupation}
-                                onChange={handleChange}
-                              >
-                                <option value={""} disabled>
-                                  --Occupation--
-                                </option>
-                                {occupationsOptions}
-                              </select></td>
-                            </tr>
-                            <tr>
-                              <td><label>Income</label></td>
-                              <td><select
-                                name="income"
-                                value={state.income}
-                                onChange={handleChange}
-                              >
-                                <option value={""} disabled>
-                                  --Income--
-                                </option>
-                                {incomesOptions}
-                              </select></td>
-                            </tr>
-                            <tr>
-                              <td><label>Age:</label></td>
-                              <td><select
-                                name="age"
-                                value={state.age}
-                                onChange={handleChange}
-                              >
-                                <option value={""} disabled>
-                                  --Age--
-                                </option>
-                                {agesOptions}
-                              </select></td>
-                            </tr>
+                      <table className="custom-table">
+                        <tbody>
+                          <tr>
+                            <td><label>Future Goal:</label></td>
+                            <td><textarea name="future_goal" onChange={handleChange} /></td>
+                          </tr>
+                          <tr>
+                            <td><label>Savings Goal:</label></td>
+                            <td><textarea name="savings_goal" onChange={handleChange} /></td>
+                          </tr>
+                          <tr>
+                            <td><label>Occupation:</label></td>
+                            <td><select
+                              name="occupation"
+                              value={state.occupation}
+                              onChange={handleChange}
+                            >
+                              <option value={""} disabled>
+                                --Occupation--
+                              </option>
+                              {occupationsOptions}
+                            </select></td>
+                          </tr>
+                          <tr>
+                            <td><label>Income</label></td>
+                            <td><select
+                              name="income"
+                              value={state.income}
+                              onChange={handleChange}
+                            >
+                              <option value={""} disabled>
+                                --Income--
+                              </option>
+                              {incomesOptions}
+                            </select></td>
+                          </tr>
+                          <tr>
+                            <td><label>Age:</label></td>
+                            <td><select
+                              name="age"
+                              value={state.age}
+                              onChange={handleChange}
+                            >
+                              <option value={""} disabled>
+                                --Age--
+                              </option>
+                              {agesOptions}
+                            </select></td>
+                          </tr>
 
 
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div className="grid-item">
-                      <div className="credit-card-container">
-                        <table className="custom-table">
-                          <tbody>
-                            <tr>
-                              <td><label>Future Goal:</label></td>
-                              <td> <div className="list-container">
-                                {notificationsList.map((item, index) => (
-                                  <div key={index}>
-                                    <input value={item} name="notifications" type="checkbox" onChange={handleNotificationsCheck} />
-                                    <span className={isNotificationChecked(item)}>{item}</span>
-                                  </div>
-                                ))}
-                              </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><label>Categories:</label></td>
-                              <td>
-                                <div className="list-container">
-                                  {categoriesList.map((item, index) => (
-                                    <div key={index}>
-                                      <input value={item} name="categories" type="checkbox" onChange={handleCategoryCheck} />
-                                      <span className={isCategoryChecked(item)}>{item}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                                <div>
-                                  Selected Categories: {categoriesItems}
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td><label>Price (between 0 and 50):</label></td>
-                              <td><input
-                                type="range"
-                                name="price"
-                                min="0"
-                                max="50"
-                                value={state.price}
-                                onChange={handleChange}
-                              /></td>
-                            </tr>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div>
-                      <button type="submit">Submit</button>
-                      <button type="button">Cancel</button>
+                        </tbody>
+                      </table>
 
                     </div>
                   </div>
+                  <div className="grid-item">
+                    <div className="credit-card-container">
+                      <table className="custom-table">
+                        <tbody>
+                          <tr>
+                            <td>Notification Preference:</td>
+                            <td> <div className="list-container">
+                              {notificationsList.map((item, index) => (
+                                <div key={index}>
+                                  <input value={item} name="notifications" type="checkbox" onChange={handleNotificationsCheck} />
+                                  <span className={isNotificationChecked(item)}>{item}</span>
+                                </div>
+                              ))}
+                            </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><label>Categories:</label></td>
+                            <td>
+                              <div className="list-container">
+                                {categoriesList.map((item, index) => (
+                                  <div key={index}>
+                                    <input value={item} name="categories" type="checkbox" onChange={handleCategoryCheck} />
+                                    <span className={isCategoryChecked(item)}>{item}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td><label>Price (between 0 and 50):</label></td>
+                            <td><input
+                              type="range"
+                              name="price"
+                              min="0"
+                              max="50"
+                              value={state.price}
+                              onChange={handleChange}
+                            /></td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className="grid-item">
+                    <div className="credit-card-container">
+                      <table className="custom-table">
+                        <tbody>
+                          <tr>
+                            <td>Fee Preferences:</td>
+                            <td> <div className="list-container">
+                              <select
+                                name="fee_pref"
+                                value={state.fee_pref}
+                                onChange={handleChange}
+                              >
+                                <option value={""} disabled>
+                                  --Fee Preference--
+                                </option>
+                                {fee_prefOptions}
+                              </select>
+                            </div>
+                            </td>
+                          </tr>
+                          {/* const bonus = ["Only bonus deals", "long term points"];
+                          const number_cc = ["<4", ">4"] */}
+                          <tr>
+                            <td>Debt income ratio</td>
+                            <td>
+                              <select
+                                name="debt_income_ratio"
+                                value={state.debt_income_ratio}
+                                onChange={handleChange}
+                              >
+                                <option value={""} disabled>
+                                  --Debt to Income Ratio--
+                                </option>
+                                {debt_income_ratiosOptions}
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Bonus Options</td>
+                            <td>
+                              <select
+                                name="bonus"
+                                value={state.bonus}
+                                onChange={handleChange}
+                              >
+                                <option value={""} disabled>
+                                  --Bonus Options--
+                                </option>
+                                {bonusOptions}
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Number CC</td>
+                            <td>
+                              <select
+                                name="number_cc"
+                                value={state.number_cc}
+                                onChange={handleChange}
+                              >
+                                <option value={""} disabled>
+                                  --Number CC--
+                                </option>
+                                {number_ccOptions}
+                              </select>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div>
+                    <button type="submit">Submit</button>
+                    <button type="button">Cancel</button>
+                  </div>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
-      </div>
+      </div >
 
       <footer>
         <p>
           Notice. TermsFeed uses cookies to provide necessary website functionality, improve your experience and analyze our traffic. By using our website, you agree to our legal policies: Privacy Policy, Cookies Policy
         </p>
       </footer>
-    </div>
+    </div >
 
 
 
