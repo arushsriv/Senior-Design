@@ -7,6 +7,8 @@ import './/css/PostLoginScreen.css';
 import { Link } from 'react-router-dom';
 
 import { PieChart } from './components/PieChart.tsx';
+import Navigation from './components/Menu.js';
+import Footer from './components/Footer.js';
 
 // Samples are in this URL https://react-chartjs-2.js.org/examples/pie-chart
 
@@ -71,27 +73,14 @@ function NewBudget() {
 
   return (
     <div className="layout">
-      <header>
+      <header  className="headerAppName">
         <h1>Budgify</h1>
       </header>
 
       <div className="main-content">
-        <nav>
-          <ul>
-            <Link to={'/home'}><button>Home</button></Link>
-            <br />
-            <br />
-            <Link to={'/profile'}><button>My Profile</button> </Link>
-            <br />
-            <br />
-            <Link to={'/budget'}><button>Budget</button></Link>
-            <br />
-            <br />
-            <li><Link to="/preferences"><button>Preferences</button></Link></li>
-            <br />
-            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
-          </ul>
-        </nav>
+      <div>
+          <Navigation/>
+        </div>
         <div className="line-delimiter" />
         <section className="content">
           <div className="App">
@@ -114,8 +103,8 @@ function NewBudget() {
                       <table className="custom-table">
                         <thead>
                           <tr>
-                            <th>Label</th>
-                            <th>Data</th>
+                            <th>Category</th>
+                            <th>Budget</th>
                           </tr>
                         </thead>
                         {budgetData && budgetData.labels.length > 0 && (
@@ -123,7 +112,7 @@ function NewBudget() {
                             {budgetData.labels.map((label, index) => (
                               <tr key={index}>
                                 <td>{label}</td>
-                                <td>{budgetData.datasets[0].data[index].toFixed(2)}</td>
+                                <td>$ {budgetData.datasets[0].data[index].toFixed(2)}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -141,12 +130,9 @@ function NewBudget() {
           </div>
         </section>
       </div>
-
-      <footer>
-        <p>
-          Notice. TermsFeed uses cookies to provide necessary website functionality, improve your experience and analyze our traffic. By using our website, you agree to our legal policies: Privacy Policy, Cookies Policy
-        </p>
-      </footer>
+      <div>
+        <Footer/>
+      </div>
     </div>
 
 

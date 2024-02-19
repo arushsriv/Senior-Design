@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './/css/cardOffers.css'; // Create this CSS file for styling if needed
+import Navigation from './components/Menu';
+import Footer from './components/Footer';
 
 const cardData = [
   {
@@ -36,27 +38,14 @@ const cardData = [
 function cardOffers() {
   return (
     <div className="layout">
-      <header>
+      <header  className="headerAppName">
         <h1>Budgify</h1>
       </header>
 
       <div className="main-content">
-      <nav>
-          <ul>
-            <Link to={'/home'}><button>Home</button></Link>
-            <br />
-            <br />
-            <Link to={'/profile'}><button>My Profile</button> </Link>
-            <br />
-            <br />
-            <Link to={'/budget'}><button>Budget</button></Link>
-            <br />
-            <br />
-            <li><Link to="/preferences"><button>Preferences</button></Link></li>
-            <br />
-            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
-          </ul>
-        </nav>
+      <div>
+          <Navigation/>
+        </div>
 
 
         <div className="line-delimiter" />
@@ -82,12 +71,10 @@ function cardOffers() {
           </div>
         </section>
       </div>
-
-      <footer>
-        <p>
-          Notice. TermsFeed uses cookies to provide necessary website functionality, improve your experience and analyze our traffic. By using our website, you agree to our legal policies: Privacy Policy, Cookies Policy
-        </p>
-      </footer>
+      <div>
+        <Footer/>
+      </div>
+      
     </div>
 
 

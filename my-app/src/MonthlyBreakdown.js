@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './css/cardOffers.css';
-import { type } from 'requests';
+// import { type } from 'requests';
+import Navigation from './components/Menu';
+import Footer from './components/Footer';
 
 const MonthlyBreakdown = () => {
   const [top5Data, setTop5Data] = useState([]);
@@ -38,15 +40,9 @@ const MonthlyBreakdown = () => {
       </header>
 
       <div className="main-content">
-        <nav>
-          <ul>
-            <li><Link to="/home"><button>Home</button></Link></li>
-            <li><Link to="/profile"><button>My Profile</button></Link></li>
-            <li><Link to="/budget"><button>Budget</button></Link></li>
-            <li><Link to="/preferences"><button>Preferences</button></Link></li>
-            <li><Link to="/card-offers"><button>Credit Card Recommendations</button></Link></li>
-          </ul>
-        </nav>
+      <div>
+          <Navigation/>
+        </div>
 
         <div className="line-delimiter" />
 
@@ -70,12 +66,10 @@ const MonthlyBreakdown = () => {
           </div>
         </section>
       </div>
-
-      <footer>
-        <p>
-          Notice. TermsFeed uses cookies to provide necessary website functionality, improve your experience and analyze our traffic. By using our website, you agree to our legal policies: Privacy Policy, Cookies Policy
-        </p>
-      </footer>
+      <div>
+        <Footer/>
+      </div>             
+      
     </div>
   );
 };

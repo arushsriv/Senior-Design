@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { createUser } from './loginRegisterAPI';
-import  ".//css/register.css";
+import ".//css/register.css";
 
 function Register() {
   const [id, setId] = useState('');
@@ -74,23 +74,23 @@ function Register() {
       <div className="div">
         <div className="text-wrapper">Budgify Sign Up</div>
         <div className="frame">
-          <input className="email" type="username" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
+          <input className="email" type="username" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name' />
         </div>
         <div className="email-wrapper">
           <input className="email" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name' />
         </div>
         <div className="input-wrapper">
-          <input className="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email'/>
+          <input className="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' />
         </div>
         <div className="frame-2">
-          <input className="email" value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Password'/>
+          <input className="email" value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Password' />
         </div>
         <div className="div-wrapper">
-        <button className="signup" type="submit">Sign Up</button>
+          <button className="signup" type="submit">Sign Up</button>
         </div>
         <div className="frame-3">
           <a href='/'>
-          <button className="p">Already have an account? Login</button>
+            <button className="p">Already have an account? Login</button>
           </a>
         </div>
       </div>

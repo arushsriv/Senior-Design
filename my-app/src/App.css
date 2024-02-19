@@ -23,6 +23,19 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.headerAppName {
+  color: white;
+  font-family: cursive;
+  font-size: 20px
+}
+
+
+.copyRightNotice {
+  color: white;
+  font-size: 11px
+}
+
 .card-offers {
   padding: 20px;
 }

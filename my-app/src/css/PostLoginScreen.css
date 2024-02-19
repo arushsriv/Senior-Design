@@ -1,139 +1,179 @@
 .post-logic-screen {
-  text-align: center;
-  padding: 20px;
-}
-
-.credit-card-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.credit-card-image {
-  width: 200px; /* Adjust the width as needed */
-  height: 120px; /* Adjust the height as needed */
-  border: 1px solid #0ab280;
-  border-radius: 8px;
-  margin: 0 10px;
-}
-
-.budget-image {
-  width: 300px; /* Adjust the width as needed */
-  height: 240px; /* Adjust the height as needed */
-  border: 1px solid #0ab280;
-  border-radius: 8px;
-  margin: 0 10px;
-}
-
-.dropdown-box-large {
-  font-size: large; /* or you can use specific size like '20px' */
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns with equal width */
-  grid-gap: 10px; /* Gap between grid items */
-}
-
-.grid-item {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border: 1px solid #ccc;
-}
-
-.table-container {
-  background-color: lightblue;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.custom-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.custom-table th,
-.custom-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.custom-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.custom-table tbody tr:hover {
-  background-color: #f5f5f5;
-}
-
-
-.gray-box {
-    background-color: hwb(163 73% 24%); /* Set your desired shade of gray */
-    padding: 20px; /* Adjust the padding as needed */
-    border-radius: 8px; /* Optional: Add border radius for rounded corners */
-    /* Additional styling can be added based on your requirements */
-  }
-
-  .gray-box2 {
-    background-color: #e6e6ea; /* Set your desired shade of gray */
-    padding: 80px; /* Adjust the padding as needed */
-    border-radius: 8px; /* Optional: Add border radius for rounded corners */
-    /* Additional styling can be added based on your requirements */
-  }
-
-  .layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  header {
-    background-color: #0ab280;
-    color: #0ab280;
-    padding: 10px;
     text-align: center;
-  }
-  
-  footer {
-    background-color: #0ab280;
-    color: #0ab280;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .main-content {
-    display: flex;
-    flex: 1;
-  }
-  
-  nav {
-    width: 200px;
-    background-color: #0ab280; /* Gray background for the left menu */
-    padding: 10px;
-  }
-  
-  nav ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  nav li {
-    margin-bottom: 10px;
-  }
-  
-  .line-delimiter {
-    border-left: 2px solid #ccc; /* Line delimiter between menu and content */
-    margin: 0 20px;
-  }
-  
-  .content {
-    flex: 1;
     padding: 20px;
   }
   
-  .full-width-button {
-    width: 100%;
-    padding: 10px; /* Add padding as needed */
+  .credit-card-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
   }
+  
+  .credit-card-image {
+    width: 200px; /* Adjust the width as needed */
+    height: 120px; /* Adjust the height as needed */
+    border: 1px solid #0ab280;
+    border-radius: 8px;
+    margin: 0 10px;
+  }
+
+  .budget-image {
+    width: 300px; /* Adjust the width as needed */
+    height: 240px; /* Adjust the height as needed */
+    border: 1px solid #0ab280;
+    border-radius: 8px;
+    margin: 0 10px;
+  }
+
+  .dropdown-box-large {
+    font-size: large; /* or you can use specific size like '20px' */
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns with equal width */
+    grid-gap: 10px; /* Gap between grid items */
+  }
+  
+  .grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  .table-container {
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .custom-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .custom-table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+
+  .gray-box {
+      background-color: hwb(163 73% 24%); /* Set your desired shade of gray */
+      padding: 20px; /* Adjust the padding as needed */
+      border-radius: 8px; /* Optional: Add border radius for rounded corners */
+      /* Additional styling can be added based on your requirements */
+    }
+
+    .gray-box2 {
+      background-color: #e6e6ea; /* Set your desired shade of gray */
+      padding: 80px; /* Adjust the padding as needed */
+      border-radius: 8px; /* Optional: Add border radius for rounded corners */
+      /* Additional styling can be added based on your requirements */
+    }
+  
+    .layout {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    
+    header {
+      background-color: #065744;
+      color: #065744;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    footer {
+      background-color: #065744;
+      color: #065744;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .main-content {
+      display: flex;
+      flex: 1;
+    }
+    
+    nav {
+      width: 200px;
+      background-color: #0ab280; /* Gray background for the left menu */
+      padding: 10px;
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    nav li {
+      margin-bottom: 10px;
+    }
+    
+    .line-delimiter {
+      border-left: 2px solid #ccc; /* Line delimiter between menu and content */
+      margin: 0 20px;
+    }
+    
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+    
+    .full-width-button {
+      width: 100%;
+      padding: 10px; /* Add padding as needed */
+    }
+
+    .long-button {
+      padding: 10px 20px; /* Adjust padding to make the button longer */
+      font-size: 16px;
+      background-color: #0ab280;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .long-button:hover {
+      background-color: #0056b3;
+    }
+
+    .scrolling-list-container {
+      width: 100%; /* Adjust width of the container */
+      height: 100%; /* Adjust height of the container */
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
+    
+    .scrolling-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .scrolling-list li {
+      width: 100%;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-bottom: 1px solid #ddd;
+      transition: background-color 0.3s ease; /* Smooth color transition */
+    }
+    
+    .scrolling-list li:hover {
+      background-color: #e0e0e0; /* Color change on hover */
+    }
+    

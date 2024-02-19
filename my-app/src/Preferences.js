@@ -3,14 +3,15 @@ import './App.css';
 import React, { useState } from 'react';
 
 import './/css/PostLoginScreen.css';
-import { Link } from 'react-router-dom';
-
-
+// import { Link } from 'react-router-dom';
+import LongButton from './components/LogButton';
+import Navigation from './components/Menu';
+import Footer from './components/Footer';
 // Samples are in this URL https://react-chartjs-2.js.org/examples/pie-chart
 
 function Preferences() {
 
-  const [loggedInUser] = useState('riakul');
+  // const [loggedInUser] = useState('riakul');
   const occupations = ["Doctor", "Lawyer", "Engineer", "Teacher", "Other"];
   const incomes = ["<$10,000", "$10,000 - $30,000", "$30,000 - $70,000", "$70,000 - $100,000", "$100,000 - $150,000", "$150,000+"];
   const ages = ["<18", "18 - 25", "25 - 35", "35 - 65", "65+"];
@@ -141,29 +142,23 @@ function Preferences() {
     }));
   };
 
+  /**
+   * Handle Click will save the data into the database
+   */
+  const handleClick = () => {
+    console.log('Button clicked!');
+  };
+
   return (
     <div className="layout">
-      <header>
-        <h1>Budgify</h1>
+      <header className="headerAppName">
+        <h1 >Budgify</h1>
       </header>
 
       <div className="main-content">
-        <nav>
-          <ul>
-            <Link to={'/home'}><button>Home</button></Link>
-            <br />
-            <br />
-            <Link to={'/profile'}><button>My Profile</button> </Link>
-            <br />
-            <br />
-            <Link to={'/budget'}><button>Budget</button></Link>
-            <br />
-            <br />
-            <li><Link to="/preferences"><button>Preferences</button></Link></li>
-            <br />
-            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
-          </ul>
-        </nav>
+        <div>
+          <Navigation />
+        </div>
         <div className="line-delimiter" />
         <section className="content">
           <div className="App">
@@ -294,8 +289,6 @@ function Preferences() {
                             </div>
                             </td>
                           </tr>
-                          {/* const bonus = ["Only bonus deals", "long term points"];
-                          const number_cc = ["<4", ">4"] */}
                           <tr>
                             <td>Debt income ratio</td>
                             <td>
@@ -346,25 +339,19 @@ function Preferences() {
                     </div>
                   </div>
                   <div>
-                    <button type="submit">Submit</button>
-                    <button type="button">Cancel</button>
+                    <LongButton onClick={handleClick}>Save preference</LongButton>
+                    <LongButton onClick={handleClick}>Cancel</LongButton>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-      </div >
-
-      <footer>
-        <p>
-          Notice. TermsFeed uses cookies to provide necessary website functionality, improve your experience and analyze our traffic. By using our website, you agree to our legal policies: Privacy Policy, Cookies Policy
-        </p>
-      </footer>
-    </div >
-
-
-
+      </div>
+      <div>
+           <Footer/>                         
+      </div>
+    </div>
   );
 }
 
