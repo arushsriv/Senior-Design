@@ -167,6 +167,39 @@ app.post('/predict', async (req, res) => {
   }
 });
 
+app.post('/analyzeCreditCards', async (req, res) => {
+  try {
+      const {
+          debtToIncomeRatio,
+          averageTotalMonthlyBalance,
+          newCards,
+          annualFeePreference,
+          bonusWeight,
+          annualFeeLimit,
+          ficoScore,
+          highSpendingCategories,
+          preferredStoresTravelPartners,
+      } = req.body;
+
+      const result = await analyzeCreditCards(
+          debtToIncomeRatio,
+          averageTotalMonthlyBalance,
+          newCards,
+          annualFeePreference,
+          bonusWeight,
+          annualFeeLimit,
+          ficoScore,
+          highSpendingCategories,
+          preferredStoresTravelPartners
+      );
+
+      res.json(result);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 const port = 8000;
 

@@ -43,7 +43,7 @@ const MonthlyBreakdown = () => {
             <li><Link to="/home"><button>Home</button></Link></li>
             <li><Link to="/profile"><button>My Profile</button></Link></li>
             <li><Link to="/budget"><button>Budget</button></Link></li>
-            <li><button>Point Tracker</button></li>
+            <li><Link to="/preferences"><button>Preferences</button></Link></li>
             <li><Link to="/card-offers"><button>Credit Card Recommendations</button></Link></li>
           </ul>
         </nav>

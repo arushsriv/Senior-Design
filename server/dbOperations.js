@@ -225,7 +225,46 @@ async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
   
     return output;
   }
-  
+
+  async function analyzeCreditCards(debtToIncomeRato, averageTotalMonthlyBalance, newCards, 
+    annualFeePreference, bonusWeight, annualFeeLimit, ficoScore, 
+    highSpendingCategories, preferredStoresTravelPartners) {
+
+    try {
+        const creditCardsCollection = db.collection(credit_cards);
+
+        // Fetch data directly from MongoDB
+        const cursor = await creditCardsCollection.find({});
+        const creditCardsData = await cursor.toArray();
+
+        const creditCardsDataFrame = new DataFrame(creditCardsData);
+
+        creditCardsDataFrame.set('cardMonthAvg', creditCardsDataFrame.get('offerSpend').div(creditCardsDataFrame.get('offerDays')));
+
+        // Filter credit cards based on user preferences
+        const filteredCards = creditCardsDataFrame.filter(
+            (row) => (annualFeePreference ? row.get('annualFee') <= annualFeeLimit : row.get('annualFee')) &&
+                     row.get('cardMonthAvg') < averageTotalMonthlyBalance &&
+                     row.get('scoreMin') < ficoScore &&
+                     row.get('isBusiness') !== 'TRUE'
+        );
+
+        const addVals = creditCardsDataFrame.loc[creditCardsDataFrame.get('offerSpend').eq(0)];
+        const concatenatedCards = addVals.concat(filteredCards);
+
+        // Calculate scores
+        concatenatedCards.set('score', concatenatedCards.get('offerAmount').mul(bonusWeight) +
+                                     concatenatedCards.get('universalCashbackPercent').mul(1 - bonusWeight));
+
+        // Get top 3 cards
+        const topCards = concatenatedCards.sort('score', 'desc').head(3);
+
+        // Return the top 3 ideal credit cards
+        return topCards.get(['name', 'issuer', 'offerAmount', 'offerSpend', 'offerDays',
+                             'universalCashbackPercent', 'annualFee', 'url', 'imageUrl']).toJSON();
+    } finally {
+    }
+}
 
 
 // TOOD enums for notification frequency, etc.
@@ -242,7 +281,8 @@ module.exports = {
     addBudget,
     updateBudget,
     getTop5AmountsPerCategoryItem,
-    predictSpendingWithBudget
+    predictSpendingWithBudget,
+    analyzeCreditCards
 }; 
 
 const main = async() => {

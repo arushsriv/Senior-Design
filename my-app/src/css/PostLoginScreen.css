@@ -24,7 +24,51 @@
     border-radius: 8px;
     margin: 0 10px;
   }
+
+  .dropdown-box-large {
+    font-size: large; /* or you can use specific size like '20px' */
+  }
   
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns with equal width */
+    grid-gap: 10px; /* Gap between grid items */
+  }
+  
+  .grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  .table-container {
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .custom-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .custom-table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+
   .gray-box {
       background-color: #0ab280; /* Set your desired shade of gray */
       padding: 20px; /* Adjust the padding as needed */
@@ -33,7 +77,7 @@
     }
 
     .gray-box2 {
-      background-color: #0ab280; /* Set your desired shade of gray */
+      background-color: #a8ebd7; /* Set your desired shade of gray */
       padding: 80px; /* Adjust the padding as needed */
       border-radius: 8px; /* Optional: Add border radius for rounded corners */
       /* Additional styling can be added based on your requirements */

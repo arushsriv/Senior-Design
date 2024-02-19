@@ -26,7 +26,7 @@ function Profile() {
             <Link to={'/budget'}><button>Budget</button></Link>
             <br />
             <br />
-            <button>Point Tracker</button>
+            <li><Link to="/preferences"><button>Preferences</button></Link></li>
             <br />
             <br />
             <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>

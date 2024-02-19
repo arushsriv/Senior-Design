@@ -52,8 +52,7 @@ function cardOffers() {
             <Link to={'/budget'}><button>Budget</button></Link>
             <br />
             <br />
-            <button>Point Tracker</button>
-            <br />
+            <li><Link to="/preferences"><button>Preferences</button></Link></li>
             <br />
             <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
           </ul>
