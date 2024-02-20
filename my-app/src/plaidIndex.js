@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
+import Plaid from "./Plaid";
+import './App.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Plaid />
   </React.StrictMode>,
   document.getElementById("root")
 );

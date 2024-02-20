@@ -1,15 +1,29 @@
 import './App.css';
-
-import './/css/PostLoginScreen.css'; 
+import React, { useEffect, useState } from 'react';
+import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
 import { Link } from 'react-router-dom';
 import Navigation from './components/Menu';
 import Footer from './components/Footer';
+const config = require('./config.json');
 
-function mainPage() {
+export default function MainPage({ username }) {
+  const [user, setUser] = useState('');
+  console.log("username is: ", username);
+
+  useEffect(() => {
+    fetch(`http://${config.server_host}:${config.server_port}/home?username=${username}`)
+      .then(res => res.json())
+      .then(resJson => setUser(resJson));
+  }, []);
+
+
+  console.log(user)
+
   return (
     <div className="layout">
       <header  className="headerAppName">
         <h1>Budgify</h1>
+        {/* <h1>Welcome to Budgify {username}! </h1> */}
       </header>
 
       <div className="main-content">
@@ -23,7 +37,7 @@ function mainPage() {
           <div className="App">
             <div className="post-login-screen">
               <div className="gray-box">
-                <h1>Welcome John Doe</h1>
+                <h1>Welcome {username}</h1>
                 <div className="credit-card-container">
                   <img src="/images/card1.png" alt="Credit Card 1" className="credit-card-image" />
                   <img src="/images/card2.png" alt="Credit Card 2" className="credit-card-image" />
@@ -58,5 +72,3 @@ function mainPage() {
 
   );
 }
-
-export default mainPage;

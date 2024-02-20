@@ -1,68 +1,60 @@
 import React, { useEffect, useState } from 'react';
+import './App.css';
+import MainPage from './MainPage';
 import { toast } from 'react-toastify';
 import { validateLogin } from './loginRegisterAPI';
 import  ".//css/login.css";
-import './App.css';
 
 
 
-function Login() {
+const config = require('./config.json');
+
+export default function Login() {
+// function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    sessionStorage.clear();
+    fetch(`http://${config.server_host}:${config.server_port}/`)
+    .then(res => res.json())
+    .then(resJson => {
+      setPassword(resJson)
+    })
   }, []);
-
-  async function displayLogin() {
-    const resp = await validateLogin(username);
-    if (resp.error) {
-      toast.error(resp.error.message);
-    } else if (Object.keys(resp).length === 0) {
-      toast.error('Invalid username');
-    } else if (resp.password === password) {
-      toast.success('login successful');
-      sessionStorage.setItem('username', username);
-      window.location.href = `/user/${username}`;
-    } else {
-      toast.error('Invalid password');
-    }
-  }
-
-  const validate = () => {
-    let result = true;
-    if (username === '' || username === null) {
-      result = false;
-      toast.warning('Please enter username');
-    }
-    if (password === '' || password === null) {
-      result = false;
-      toast.warning('please enter password');
-    }
-    return result;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
-      displayLogin();
-      // console.log("LOGIN RSP", resp);
-    }
+    setLoggedIn(true);
   };
-      return (
+  
+  return (
+        // <div>
+        //   {!loggedIn ? (
         <div className="index" onSubmit={handleSubmit}>
           <div className="div">
             <div className="text-wrapper">Budgify</div>
-            <div className="text-wrapper-2"><button type="button"> Forgot Password? </button></div>
+            <div className="text-wrapper-2">
+              <button data-testid="submitButton" className="loginButton" type="button"> Forgot Password? </button>
+            </div>
+            {/* <button data-testid="submitButton" className="loginButton">Forgot Password</button> */}
             <div className="text-wrapper-3">Email</div>
             <div className="text-wrapper-4">Password</div>
             
             <div className="div-wrapper2">
-            <button className="text-wrapper-5" type="submit">Login</button>
+            <a href="/home">
+            <button data-testid="submitButton" className="text-wrapper-5" type="submit">Login</button>
+            </a>
+            {/* <a href="/home">
+              <button data-testid="submitButton" className="loginButton" type="submit">Login</button>
+            </a> */}
             </div>
             <div className="div-wrapper">
             <a href="/register">
             <button className="text-wrapper-5" >Sign Up</button>
+            {/* <a href="/register">
+              <button data-testid="submitButton" className="loginButton">Register</button>
+            </a> */}
             </a>
             </div>
             <div className="frame-2">
@@ -73,7 +65,11 @@ function Login() {
             </div>
           </div>
         </div>
+      //   ) : (
+      //     loggedIn && <MainPage username={username} password={password} />
+      //   )}
+      // </div>
       );
 }
 
-export default Login;
+// export default Login;
