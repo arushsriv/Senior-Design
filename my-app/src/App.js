@@ -10,6 +10,7 @@ import Profile from './Profile';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BudgetGraphs from './BudgetGraphs';
 import NewBudget from './newBudget';
+import CardFilterForm from './CardFilterForm'
 
 function App() {
  
@@ -26,6 +27,8 @@ function App() {
           <Route path="/home" element={<MainPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/new-budget" element={<NewBudget />} />
+          <Route path="/card-form" element={<CardFilterForm />} />
+
        </Routes>
       </div>
     </Router>

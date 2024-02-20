@@ -44,3 +44,42 @@
     padding: 10px;
   }
   
+
+  
+  .credit-card-container {
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+  }
+  
+  .credit-card {
+    width: calc(33.33% - 20px); /* Adjust width as needed (3 cards per row) */
+    margin-bottom: 20px;
+  }
+  
+  .credit-card-wrapper {
+    border: 2px solid #007bff; /* Change the color to whatever you like */
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0; /* Default background color */
+  }
+  
+  .credit-card:nth-child(2n) .credit-card-wrapper {
+    background-color: #e6e6e6; /* Alternate background color */
+  }
+  
+  .credit-card:nth-child(3n) .credit-card-wrapper {
+    background-color: #dcdcdc; /* Third card background color */
+  }
+  
+  .credit-card-details {
+    margin-left: 20px;
+  }
+  
+  /* Additional styling */
+  .credit-card img {
+    max-width: 100px; /* Adjust as needed */
+  }
+  

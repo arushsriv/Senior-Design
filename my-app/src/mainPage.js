@@ -43,7 +43,7 @@ function mainPage() {
                   </div>
                 </div>
               </div>
-              <Link to={'/card-offers'}><button>Recommend me a card</button></Link>
+              <Link to={'/card-form'}><button>Recommend me a card</button></Link>
             </div>
           </div>
         </section>

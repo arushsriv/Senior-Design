@@ -200,6 +200,28 @@ app.post('/analyzeCreditCards', async (req, res) => {
   }
 });
 
+app.post('/save-preferences', async (req, res) => {
+  const preferencesData = req.body;
+
+  // Assuming you have a unique identifier for the user (e.g., username)
+  const username = 'riakul'; // Change this to the actual username
+
+  // Call the async function to save preferences
+  const result = await lib.savePreferences(preferencesData, username);
+
+  // Send the result as JSON response
+  res.json(result);
+});
+
+app.post('/getTopCreditCards', async (req, res) => {
+  try {
+    const result = await lib.getTopCreditCards(db, req);
+    return res.json(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 const port = 8000;
 

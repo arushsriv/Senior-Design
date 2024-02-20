@@ -7,6 +7,7 @@ import './/css/PostLoginScreen.css';
 import LongButton from './components/LogButton';
 import Navigation from './components/Menu';
 import Footer from './components/Footer';
+import axios from 'axios';
 // Samples are in this URL https://react-chartjs-2.js.org/examples/pie-chart
 
 function Preferences() {
@@ -145,8 +146,38 @@ function Preferences() {
   /**
    * Handle Click will save the data into the database
    */
-  const handleClick = () => {
-    console.log('Button clicked!');
+  const handleClick = async () => {
+    try {
+      // Create an object with the preferences data
+      const preferencesData = {
+        fname: state.fname,
+        lname: state.lname,
+        future_goal: state.future_goal,
+        savings_goal: state.savings_goal,
+        occupation: state.occupation,
+        income: state.income,
+        age: state.age,
+        free_prefs: state.free_prefs,
+        bonus_op: state.bonus_op,
+        debt_income_ratio_op: state.debt_income_ratio_op,
+        isChecked: state.isChecked,
+        categories: state.categories,
+        notifications: state.notifications,
+        gender: state.gender,
+        price: state.price,
+        fee_pref: state.fee_pref,
+        debt_income_ratio: state.debt_income_ratio,
+        bonus: state.bonus,
+        number_cc: state.number_cc
+      };
+  
+      // Make a POST request to your server
+      const response = await axios.post('http://localhost:8000/save-preferences', preferencesData);
+  
+      console.log('Preferences saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving preferences:', error);
+    }
   };
 
   return (

@@ -158,116 +158,97 @@ async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
 }
 
 
-  
-  async function predictSpendingWithBudget(db, desiredMonth, overallBudget, scalingFactor = 0.8) {
-    const transactionsCollection = db.collection('transactions');
-  
-    // Convert desiredMonth to a MongoDB query
-    const monthQuery = {
-      $eq: [{ $month: '$transaction_date' }, desiredMonth.getMonth() + 1], // Months are zero-based in JavaScript Date object
-    };
-  
-    // Filter transactions based on the desired month
-    const monthlySpending = await transactionsCollection
-      .aggregate([
-        {
-          $match: { transaction_date: monthQuery },
-        },
-        {
-          $group: {
-            _id: '$Category',
-            totalDebit: { $sum: '$Debit' },
-          },
-        },
-      ])
-      .toArray();
-  
-    // Train a linear regression model for each category
-    const models = {};
-    for (const categoryData of monthlySpending) {
-      const category = categoryData._id;
-      const categoryDataPoints = await transactionsCollection
-        .aggregate([
-          {
-            $match: { Category: category },
-          },
-          {
-            $group: {
-              _id: { $month: '$transaction_date' },
-              totalDebit: { $sum: '$Debit' },
-            },
-          },
-        ])
-        .toArray();
-  
-      const X = categoryDataPoints.map((dataPoint) => [dataPoint._id]); // Months
-      const y = categoryDataPoints.map((dataPoint) => dataPoint.totalDebit / overallBudget); // Normalize to percentage of overall budget
-  
-      const net = new brain.recurrent.GRUTimeStep();
-      net.train(X, y);
-  
-      models[category] = net;
+
+
+const savePreferences = async (preferencesData, username) => {
+  try {
+    // Find the user by username and update preferences
+    const result = await db.collection('users').updateOne(
+      { username: username },
+      { $set: preferencesData },
+      { upsert: true }
+    );
+
+    console.log('Preferences saved successfully:', result);
+    return { success: true, message: 'Preferences saved successfully' };
+  } catch (error) {
+    console.error('Error saving preferences:', error);
+    return { success: false, message: 'Error saving preferences' };
+  }
+};
+
+async function getTopCreditCards(db, req) {
+  // User input variables
+  const {
+    debtToIncomeRatio,
+    averageTotalMonthlyBalance,
+    newCards,
+    annualFeePreference,
+    bonusWeight,
+    annualFeeLimit,
+    ficoScore,
+    highSpendingCategories,
+    preferredStoresTravelPartners,
+  } = req.body;
+
+  try {
+    if (isNaN(bonusWeight) || bonusWeight < 0 || bonusWeight > 1) {
+      throw new Error("Input is not a valid number between 0 and 1.");
     }
-  
-    // Make predictions for the desired month with the scaling factor
-    const predictions = {};
-    for (const [category, model] of Object.entries(models)) {
-      const XDesired = [desiredMonth.getMonth() + 1]; // Months
-      const predictedPercentage = model.run(XDesired)[0];
-      const scaledPrediction = Math.max(predictedPercentage * scalingFactor, 0.0); // Set a minimum value of 0
-      predictions[category] = scaledPrediction * overallBudget; // Convert back to actual spending
-    }
-  
-    const output = {};
-    for (const [category, prediction] of Object.entries(predictions)) {
-      output[category] = parseFloat(prediction.toFixed(2));
-    }
-  
-    return output;
+  } catch (error) {
+    return { error: error.message };
   }
 
-  async function analyzeCreditCards(debtToIncomeRato, averageTotalMonthlyBalance, newCards, 
-    annualFeePreference, bonusWeight, annualFeeLimit, ficoScore, 
-    highSpendingCategories, preferredStoresTravelPartners) {
+  if (debtToIncomeRatio > 0.5) {
+    return {
+      error: "Due to your high debt to income ratio, we recommend focusing on your budgeting before getting a new card. Check out the budgeting tab of our website for more tips.",
+    };
+  }
 
-    try {
-        const creditCardsCollection = db.collection(credit_cards);
+  if (newCards > 4) {
+    return {
+      error: "According to the Chase 5/24 Rule, you shouldn't create more than 5 new credit card accounts within 24 months. Consider waiting a couple of months before applying for your next card to avoid hurting your credit score.",
+    };
+  }
 
-        // Fetch data directly from MongoDB
-        const cursor = await creditCardsCollection.find({});
-        const creditCardsData = await cursor.toArray();
+  try {
+    // Simulate an asynchronous operation (e.g., fetching data from MongoDB)
+    // Replace this with actual asynchronous operations as needed
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-        const creditCardsDataFrame = new DataFrame(creditCardsData);
+    // Assuming you have credit card data as an array
+    let creditCardsData = await db.collection('credit_cards').find().toArray();
 
-        creditCardsDataFrame.set('cardMonthAvg', creditCardsDataFrame.get('offerSpend').div(creditCardsDataFrame.get('offerDays')));
+    // Filter credit cards based on user preferences
+    let filteredCards = creditCardsData.filter(card =>
+      (card.annualFee <= annualFeeLimit || !annualFeePreference) &&
+      (card.card_month_avg < averageTotalMonthlyBalance) &&
+      (card.score_min < ficoScore) &&
+      (card.isBusiness !== 'TRUE')
+    );
 
-        // Filter credit cards based on user preferences
-        const filteredCards = creditCardsDataFrame.filter(
-            (row) => (annualFeePreference ? row.get('annualFee') <= annualFeeLimit : row.get('annualFee')) &&
-                     row.get('cardMonthAvg') < averageTotalMonthlyBalance &&
-                     row.get('scoreMin') < ficoScore &&
-                     row.get('isBusiness') !== 'TRUE'
-        );
+    // Assuming you have credit card data as an array
+    let addVals = creditCardsData.filter(card => card.offerSpend === 0);
+    filteredCards = addVals.concat(filteredCards);
 
-        const addVals = creditCardsDataFrame.loc[creditCardsDataFrame.get('offerSpend').eq(0)];
-        const concatenatedCards = addVals.concat(filteredCards);
+    // Sort cards based on a scoring mechanism (custom logic based on user preferences)
+    filteredCards.forEach(card => {
+      card.score = card.offerAmount * bonusWeight + card.universalCashbackPercent * (1 - bonusWeight);
+    });
 
-        // Calculate scores
-        concatenatedCards.set('score', concatenatedCards.get('offerAmount').mul(bonusWeight) +
-                                     concatenatedCards.get('universalCashbackPercent').mul(1 - bonusWeight));
+    // Get top 3 cards
+    let topCards = filteredCards.sort((a, b) => b.score - a.score).slice(0, 3);
 
-        // Get top 3 cards
-        const topCards = concatenatedCards.sort('score', 'desc').head(3);
+    // Remove circular references before sending the response
+    const cleanTopCards = topCards.map(card => ({ ...card, _id: card._id.toString() }));
 
-        // Return the top 3 ideal credit cards
-        return topCards.get(['name', 'issuer', 'offerAmount', 'offerSpend', 'offerDays',
-                             'universalCashbackPercent', 'annualFee', 'url', 'imageUrl']).toJSON();
-    } finally {
-    }
+    // Return the top 3 ideal credit cards
+    return { topCards: cleanTopCards };
+  } catch (error) {
+    console.error(error);
+    return { error: "Internal Server Error" };
+  }
 }
-
-
-// TOOD enums for notification frequency, etc.
 
 module.exports = {
     connect,
@@ -281,8 +262,8 @@ module.exports = {
     addBudget,
     updateBudget,
     getTop5AmountsPerCategoryItem,
-    predictSpendingWithBudget,
-    analyzeCreditCards
+    savePreferences,
+    getTopCreditCards
 }; 
 
 const main = async() => {

@@ -25,6 +25,46 @@ transaction_schema = {
     "credit": float
 }
 
+credit_card_schema = {
+    {
+        "name": str,
+        "issuer": str,
+        "network": str,
+        "currency": str,
+        "offer": {
+            "amount": int,
+            "spend": int,
+            "days": int
+        },
+        "offerUrl": str,
+        "countsTowards524": bool,
+        "details": str,
+        "isBusiness": bool,
+        "annualFee": int,
+        "isAnnualFeeWaived": bool,
+        "scoreMin": int,
+        "universalCashbackPercent": int,
+        "url": str,
+        "imageUrl": str,
+        "credits": {
+            "Category1": int,
+            "Category2": int,
+            "Category3": int
+        }
+    }
+
+}
+
+@app.route('/card-offers', methods=['POST'])
+def cardOffers():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    transactions = list(collection.find({'user_id': user_id}))  # Retrieve transactions for the user
+    analyzer = TransactionAnalyzer(transactions)  # Assuming transactions is a DataFrame
+    predicted_spending = analyzer.budget_breakdown();
+    return jsonify({'budget_spending': predicted_spending}), 200
+
+
 @app.route('/budget-spending', methods=['POST'])
 def getBudgetByMonth():
     data = request.get_json()
