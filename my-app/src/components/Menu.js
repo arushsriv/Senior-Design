@@ -15,6 +15,10 @@ function Navigation() {
             <br />
           </li>
           <li>
+            <Link to={'/plaid'} style={{ textDecoration: 'none' }}><b>Connect to Plaid</b></Link>
+            <br />
+          </li>
+          <li>
             <Link to={'/budget'} style={{ textDecoration: 'none' }}><b>Budget</b></Link>
             <br />
           </li>

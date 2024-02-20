@@ -34,13 +34,17 @@ export default function Login() {
         <div className="index" onSubmit={handleSubmit}>
           <div className="div">
             <div className="text-wrapper">Budgify</div>
-            <div className="text-wrapper-2"><button type="button"> Forgot Password? </button></div>
+            <div className="text-wrapper-2">
+              <button data-testid="submitButton" className="loginButton" type="button"> Forgot Password? </button>
+            </div>
             {/* <button data-testid="submitButton" className="loginButton">Forgot Password</button> */}
             <div className="text-wrapper-3">Email</div>
             <div className="text-wrapper-4">Password</div>
             
             <div className="div-wrapper2">
-            <button className="text-wrapper-5" type="submit">Login</button>
+            <a href="/home">
+            <button data-testid="submitButton" className="text-wrapper-5" type="submit">Login</button>
+            </a>
             {/* <a href="/home">
               <button data-testid="submitButton" className="loginButton" type="submit">Login</button>
             </a> */}
