@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./plaidIndex.css";
 import Plaid from "./Plaid";
+import './App.css';
 
 ReactDOM.render(
   <React.StrictMode>

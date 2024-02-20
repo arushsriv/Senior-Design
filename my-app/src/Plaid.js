@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { usePlaidLink } from "react-plaid-link";
-// import "./plaidApp.css";
+import './App.css';
 
 function Plaid(props) {
   const [token, setToken] = useState(null);
@@ -33,6 +33,9 @@ function Plaid(props) {
     }
   }, [setToken]);
 
+  console.log('test');
+  console.log(process.env.PLAID_CLIENT_ID);
+
   // Fetch balance data
   const getBalance = React.useCallback(async () => {
     setLoading(true);
@@ -61,6 +64,7 @@ function Plaid(props) {
       createLinkToken();
     }
     if (isOauth && ready) {
+      console.log('clicked');
       open();
     }
   }, [token, isOauth, ready, open]);
@@ -73,8 +77,8 @@ function Plaid(props) {
           <p>Budgify uses Plaid to verify your bank account information and, periodically, your bank account balance to check if you have enough funds to cover certain transactions. If your bank is eligible for instant verification, you'll be prompted to add your online banking username and password (or other identifying information) after selecting your bank.</p>
         </div>
         <div class='center'>
-          <button onClick={() => open()
-            } disabled={!ready}>
+          <button data-testid="submitButton" className="connectButton" type="submit" onClick={() => open()
+            } disabled={ready}>
             <strong>Click here to link your bank account</strong>
           </button>
 

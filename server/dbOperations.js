@@ -122,32 +122,32 @@ module.exports = {
 
 const main = async() => {
     
-    const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
+    // const db = await connect('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
     
-    const newUser = new Object();
-    newUser.username = "julia";
-    newUser.password = "password";
-    newUser.first_name = "Julia"
-    newUser.last_name = "Wang"
-    newUser.email = "juliawang143@gmail.com"
-    await addUser(db, newUser, newUser.username)
+    // const newUser = new Object();
+    // newUser.username = "julia";
+    // newUser.password = "password";
+    // newUser.first_name = "Julia"
+    // newUser.last_name = "Wang"
+    // newUser.email = "juliawang143@gmail.com"
+    // await addUser(db, newUser, newUser.username)
 
-    const preferences = new Object();
-    preferences.occupation = "SWE"
-    preferences.income = "<$10,000"
-    preferences.age = "18-25"
-    preferences.categories = ["Transportation", "Rent"]
-    preferences.notifications = "weekly"
-    await addPreferences(db, newUser.username, preferences)
+    // const preferences = new Object();
+    // preferences.occupation = "SWE"
+    // preferences.income = "<$10,000"
+    // preferences.age = "18-25"
+    // preferences.categories = ["Transportation", "Rent"]
+    // preferences.notifications = "weekly"
+    // await addPreferences(db, newUser.username, preferences)
 
     // const categories = ["Food"]
     // await updateCategories(db, newUser.username, categories)
 
-    const budget = {"transportation": "10,000", "rent": "20,000"}
-    await addBudget(db, newUser.username, budget)
+    // const budget = {"transportation": "10,000", "rent": "20,000"}
+    // await addBudget(db, newUser.username, budget)
 
-    const newBudget = {"transportation": "20,000", "rent": "10,000"}
-    await updateBudget(db, newUser.username, newBudget)
+    // const newBudget = {"transportation": "20,000", "rent": "10,000"}
+    // await updateBudget(db, newUser.username, newBudget)
 
 }; 
     

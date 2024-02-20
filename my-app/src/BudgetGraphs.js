@@ -17,6 +17,8 @@ function BudgetGraphs() {
             <br />
             <Link to={'/profile'}><button>My Profile</button> </Link>
             <br />
+            <Link to={'/plaid'}><button>Connect with Plaid</button> </Link>
+            <br />
             <Link to={'/budget'}><button>Budget</button></Link>
             <br />
             <button>Point Tracker</button>
