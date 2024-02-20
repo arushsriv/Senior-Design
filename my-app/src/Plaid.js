@@ -28,8 +28,10 @@ function Plaid(props) {
     } else {
       const response = await fetch("/api/create_link_token", {});
       // respones is ok and status 200, so that's good
-      // console.log(response.status);
-      const data = await response.text();
+      console.log(response.status);
+      console.log("before");
+      const data = await response.json();
+      console.log("after");
       console.log(data);
       // It doesnt get here
       setToken(data.link_token);
@@ -79,7 +81,7 @@ function Plaid(props) {
         </div>
         <div class='center'>
           <button data-testid="submitButton" className="connectButton" type="submit" onClick={() => open()
-            } disabled={ready}>
+            } disabled={!ready}>
             <strong>Click here to link your bank account</strong>
           </button>
 
