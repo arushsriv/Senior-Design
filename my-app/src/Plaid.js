@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import './App.css';
+import './/css/PostLoginScreen.css'; // Create this CSS file for styling if needed
+import Navigation from './components/Menu';
+import Footer from './components/Footer';
 
 function Plaid(props) {
   const [token, setToken] = useState(null);
@@ -27,13 +30,7 @@ function Plaid(props) {
       setToken(linkToken);
     } else {
       const response = await fetch("/api/create_link_token", {});
-      // respones is ok and status 200, so that's good
-      console.log(response.status);
-      console.log("before");
       const data = await response.json();
-      console.log("after");
-      console.log(data);
-      // It doesnt get here
       setToken(data.link_token);
       localStorage.setItem("link_token", data.link_token);
     }
@@ -71,31 +68,48 @@ function Plaid(props) {
       open();
     }
   }, [token, isOauth, ready, open]);
+
+  console.log(data);
   
   return (
-    <body>
-      <div class='container'>
-        <div class='header'>
-          <h1>Step 1: Link your bank account(s) to Budgify!</h1>
-          <p>Budgify uses Plaid to verify your bank account information and, periodically, your bank account balance to check if you have enough funds to cover certain transactions. If your bank is eligible for instant verification, you'll be prompted to add your online banking username and password (or other identifying information) after selecting your bank.</p>
-        </div>
-        <div class='center'>
-          <button data-testid="submitButton" className="connectButton" type="submit" onClick={() => open()
-            } disabled={!ready}>
-            <strong>Click here to link your bank account</strong>
-          </button>
+      <div className="layout">
+      <header className="headerAppName">
+        <h1>Budgify</h1>
+        </header>
+        <div className="main-content">
+          <div>
+            <Navigation/>
+          </div>
+          <div className="line-delimiter" />
+          <section className="content">
 
-          {!loading &&
-            data != null &&
-            Object.entries(data).map((entry, i) => (
-              <pre key={i}>
-                <code>{JSON.stringify(entry[1], null, 2)}</code>
-              </pre>
-            )
-          )}
-        </div>
+            <div className="App">
+              <div className="post-login-screen">
+                <div className="gray-box">
+                <h1>Link your bank account(s) to Budgify!</h1>
+                <p>Budgify uses Plaid to verify your bank account information and, periodically, your bank account balance to check if you have enough funds to cover certain transactions. If your bank is eligible for instant verification, you'll be prompted to add your online banking username and password (or other identifying information) after selecting your bank.</p>
+                <button data-testid="submitButton" className="connectButton" type="submit" onClick={() => open()
+                  } disabled={!ready}>
+                  <strong>Click here to link your bank account</strong>
+                </button>
+                <br />
+                {!loading && data && data.Balance && data.Balance.accounts && 
+                  <div>
+                    <p>These are your accounts linked with Budigfy:</p>
+                    {data.Balance.accounts.map((account, i) => (
+                      <div key={i}>{account.name}</div>
+                    ))}
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </body>
+      <div>
+        <Footer/>
+      </div>
+    </div>
   );
 }
 
