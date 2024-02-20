@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './/css/cardOffers.css'; // Create this CSS file for styling if needed
+import axios from 'axios';
+import './css/cardOffers.css';
+// import { type } from 'requests';
+import Navigation from './components/Menu';
+import Footer from './components/Footer';
 
-const cardData = [
-  {
-    id: 1,
-    cardName: 'Shopping',
-    feature1: 'Detail 3A',
-    feature2: 'Detail 3B',
-    feature3: 'Detail 3C',
-    feature4: 'Detail 3D',
-  },
-  {
-    id: 2,
-    cardName: 'Dining',
-    feature1: 'Detail 4A',
-    feature2: 'Detail 4B',
-    feature3: 'Detail 4C',
-    feature4: 'Detail 4D',
-  },
-  {
-    id: 3,
-    cardName: 'Grocery',
-    feature1: 'Detail 5A',
-    feature2: 'Detail 5B',
-    feature3: 'Detail 5C',
-    feature4: 'Detail 5D',
-  },
-  // Add more card data as needed
-];
+const MonthlyBreakdown = () => {
+  const [top5Data, setTop5Data] = useState([]);
 
-function MonthlyBreakdown() {
+
+  useEffect(() => {
+    const today = new Date();
+    const firstDayOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const formattedDate = `${firstDayOfLastMonth.getFullYear()}-${(firstDayOfLastMonth.getMonth() + 1).toString().padStart(2, '0')}-01`;
+    console.log(formattedDate)
+    console.log(typeof(formattedDate))
+  
+    const fetchTop5Data = async () => {
+      console.log('fetch')
+      try {
+        console.log('fetch2')
+        const response = await axios.get(`http://localhost:8000/top5/${formattedDate}`);
+        console.log('API Response:', response);
+        setTop5Data(response.data.top5Data);
+        console.log('top5Data:', response.data.top5Data);
+      } catch (error) {
+        console.error('Error fetching top 5 data:', error);
+      }
+    };
+  
+    fetchTop5Data();
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+  console.log('top5Data outside useEffect:', top5Data);
   return (
     <div className="layout">
       <header>
@@ -38,19 +40,9 @@ function MonthlyBreakdown() {
       </header>
 
       <div className="main-content">
-      <nav>
-          <ul>
-            <Link to={'/home'}><button>Home</button></Link>
-            <br />
-            <Link to={'/profile'}><button>My Profile</button> </Link>
-            <br />
-            <Link to={'/budget'}><button>Budget</button></Link>
-            <br />
-            <button>Point Tracker</button>
-            <Link to={'/card-offers'}><button>Credit Card Recommendations</button></Link>
-          </ul>
-        </nav>
-
+      <div>
+          <Navigation/>
+        </div>
 
         <div className="line-delimiter" />
 
@@ -58,41 +50,28 @@ function MonthlyBreakdown() {
           <div className="card-offers">
             <h1>Monthly Category Breakdown</h1>
             <div className="card-list">
-              {cardData.map((card) => (
-                <div key={card.id} className="card-item">
-                  <h2>{card.cardName}</h2>
+              {top5Data.map((category) => (
+                <div key={category.Category} className="card-item">
+                  <h2>{category.Category}</h2>
                   <ul>
-                    <li>{card.feature1}</li>
-                    <li>{card.feature2}</li>
-                    <li>{card.feature3}</li>
-                    <li>{card.feature4}</li>
+                    {category.transactions.map((transaction, index) => (
+                      <li key={index}>{transaction[0].Description}: {transaction[0].Debit}</li>
+                    ))}
+
                   </ul>
-                  <Link to={`/details/${card.id}`}>Details</Link>
+                  {/* Add more details or links as needed */}
                 </div>
               ))}
             </div>
           </div>
         </section>
       </div>
-
-      <footer>
-        <p>
-          Notice. TermsFeed uses cookies to provide necessary website functionality, improve your experience and analyze our traffic. By using our website, you agree to our legal policies: Privacy Policy, Cookies Policy
-        </p>
-      </footer>
+      <div>
+        <Footer/>
+      </div>             
+      
     </div>
-
-
-
-
-
-
-
-
-
-
-
   );
-}
+};
 
 export default MonthlyBreakdown;

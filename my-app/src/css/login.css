@@ -1,85 +1,168 @@
-.loginApp {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    background: #246b7bb1;
-    background-size: cover;
-  }
-  
-  
-  .auth-form-container {
-    width: 800px;
-    max-width: 800px;
-    margin: 2rem;
-    padding: 2rem;
-    box-shadow: 0 0 40px rgba(0 0 0 0.2);
-    border-radius: 8px;
-    background: #ffff;
-  }
-  
-  .login-form, .register-form{
-    width: 700px;
-    max-width: 800px;
-    padding: 2rem 0;
-    box-shadow: 0 0 40px rgba(0 0 0 0.2);
-    align-items: center;
-    border-radius: 4px;
-    background: #ffff;
-  
-  }
-  
-  .loginContainer, 
-  .loginInput,
-  .loginButton {
-    font: 500 1rem 'Quicksand', sans-serif;
-    align-items: center;
-  }
-  
-  .loginlabel {
-    text-align: center;
-    padding: 0.25rem 0;
-  
-  }
-  
-  .loginInput {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    box-sizing: border-box;
-    border-radius: 4px;
-    border: 1px solid #dddddd;
-    outline: none;
-    background: #dddddd;
-    transition: background 0.2s, border-color 0.2s; 
-  }
-  
-  .loginButton {
-    width: 100%;
-    padding: 1rem 2rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #ffff;
-    border-radius: 4px;
-    outline: none;
+.index {
+  background-color: #065744;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.index .div {
+  background-color: #065744;
+  height: 982px;
+  position: relative;
+  width: 1512px;
+}
+
+.index .text-wrapper {
+  color: #ffffff;
+  font-family: "Jacques Francois";
+  font-size: 96px;
+  font-weight: 400;
+  left: 600px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 78px;
+}
+
+.index .text-wrapper-2 {
+  color: #ffffff;
+  font-family: "Jacques Francois";
+  font-size: 24px;
+  font-weight: 400;
+  left: 1119px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-decoration: underline;
+  top: 552px;
+}
+
+.index .text-wrapper-3 {
+  color: #ffffff;
+  font-family: "Jacques Francois";
+  font-size: 40px;
+  font-weight: 400;
+  left: 205px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 205px;
+}
+
+.index .text-wrapper-4 {
+  color: #ffffff;
+  font-family: "Jacques Francois";
+  font-size: 40px;
+  font-weight: 400;
+  left: 205px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 387px;
+}
+
+.index .frame {
+  background-color: #0ab280;
+  border-radius: 10px;
+  height: 75px;
+  left: 455px;
+  overflow: hidden;
+  position: absolute;
+  top: 598px;
+  width: 595px;
+}
+
+.index .text-wrapper-5 {
+  color: #ffffff;
+  font-family: "Jacques Francois";
+  font-size: 40px;
+  font-weight: 400;
+  left: 241px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 10px;
+  background-color: #0ab280; /* Set your button background color */
     cursor: pointer;
-    background: #899a97 !important;
-    align-items: center;
-  }
-  
-  .loginButton:hover {
-    background: #007f67;
-  }
-  .loginButton:active {
-    transform: scale(0.98);
-  }
-  
-  .loginInput:focus {
-    border-color: #009579;
-    background: #ffff;
-  }
-  .app-title {
-    background: #ffff;
-  }
+    border: 0;
+    position: center;
+}
+
+
+.index .div-wrapper {
+  background-color: #0ab280;
+  border-radius: 10px;
+  height: 75px;
+  left: 455px;
+  overflow: hidden;
+  position: absolute;
+  top: 716px;
+  width: 595px;
+}
+
+.index .div-wrapper2 {
+  background-color: #0ab280;
+  border-radius: 10px;
+  height: 75px;
+  left: 455px;
+  overflow: hidden;
+  position: absolute;
+  top: 615px;
+  width: 595px;
+}
+
+
+.index .frame-2 {
+  background-color: #fff8f8;
+  border-radius: 10px;
+  height: 83px;
+  left: 201px;
+  overflow: hidden;
+  position: absolute;
+  top: 279px;
+  width: 1112px;
+}
+
+.index .text-wrapper-7 {
+  color: #000000;
+  background-color: transparent;
+  border: 0;
+  font-family: "Jacques Francois";
+  font-size: 40px;
+  font-weight: 400;
+  left: 0px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 14px;
+  width: 1112px;
+}
+
+.index .password-wrapper {
+  background-color: #fff8f8;
+  border-radius: 10px;
+  height: 83px;
+  left: 201px;
+  overflow: hidden;
+  position: absolute;
+  top: 457px;
+  width: 1112px;
+}
+
+.index .password {
+  background-color: transparent;
+  border: 0;
+  color: #000000;
+  font-family: "Jacques Francois";
+  font-size: 40px;
+  font-weight: 400;
+  height: 53px;
+  left: 15px;
+  letter-spacing: 0;
+  line-height: normal;
+  padding: 0;
+  position: relative;
+  top: 14px;
+  width: 1112px;
+}

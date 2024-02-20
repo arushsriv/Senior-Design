@@ -103,6 +103,180 @@ const updateBudget = async (db, username, budget) => {
         throw new Error(`cannot update budget for user ${username}`);
     }
 }
+async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
+  const transactionsCollection = db.collection('transactions');
+
+  const top5PerCategoryItem = await transactionsCollection.aggregate([
+    {
+      $addFields: {
+        transaction_date: {
+          $cond: {
+            if: { $eq: [{ $type: '$transaction_date' }, 'string'] },
+            then: { $toDate: '$transaction_date' },
+            else: '$transaction_date',
+          },
+        },
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $and: [
+            { $eq: [{ $year: '$transaction_date' }, desiredMonth.getFullYear()] },
+            { $eq: [{ $month: '$transaction_date' }, desiredMonth.getMonth() + 1] },
+          ],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          Category: '$Category',
+          Description: '$Description',
+        },
+        transactions: { $push: '$$ROOT' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        Category: '$_id.Category',
+        Description: '$_id.Description',
+        transactions: '$transactions',
+        combo: { $concat: ['$_id.Category', ' - ', '$_id.Description'] }, // Unique combination of Category and Description
+      },
+    },
+    {
+      $group: {
+        _id: '$Category',
+        categoryData: { $push: '$$ROOT' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        Category: '$_id',
+        transactions: {
+          $slice: ['$categoryData.transactions', 5], // Get the top 5 transactions per category
+        },
+      },
+    },
+  ]).toArray();
+
+  console.log(top5PerCategoryItem);
+
+  return top5PerCategoryItem;
+}
+
+
+  
+  async function predictSpendingWithBudget(db, desiredMonth, overallBudget, scalingFactor = 0.8) {
+    const transactionsCollection = db.collection('transactions');
+  
+    // Convert desiredMonth to a MongoDB query
+    const monthQuery = {
+      $eq: [{ $month: '$transaction_date' }, desiredMonth.getMonth() + 1], // Months are zero-based in JavaScript Date object
+    };
+  
+    // Filter transactions based on the desired month
+    const monthlySpending = await transactionsCollection
+      .aggregate([
+        {
+          $match: { transaction_date: monthQuery },
+        },
+        {
+          $group: {
+            _id: '$Category',
+            totalDebit: { $sum: '$Debit' },
+          },
+        },
+      ])
+      .toArray();
+  
+    // Train a linear regression model for each category
+    const models = {};
+    for (const categoryData of monthlySpending) {
+      const category = categoryData._id;
+      const categoryDataPoints = await transactionsCollection
+        .aggregate([
+          {
+            $match: { Category: category },
+          },
+          {
+            $group: {
+              _id: { $month: '$transaction_date' },
+              totalDebit: { $sum: '$Debit' },
+            },
+          },
+        ])
+        .toArray();
+  
+      const X = categoryDataPoints.map((dataPoint) => [dataPoint._id]); // Months
+      const y = categoryDataPoints.map((dataPoint) => dataPoint.totalDebit / overallBudget); // Normalize to percentage of overall budget
+  
+      const net = new brain.recurrent.GRUTimeStep();
+      net.train(X, y);
+  
+      models[category] = net;
+    }
+  
+    // Make predictions for the desired month with the scaling factor
+    const predictions = {};
+    for (const [category, model] of Object.entries(models)) {
+      const XDesired = [desiredMonth.getMonth() + 1]; // Months
+      const predictedPercentage = model.run(XDesired)[0];
+      const scaledPrediction = Math.max(predictedPercentage * scalingFactor, 0.0); // Set a minimum value of 0
+      predictions[category] = scaledPrediction * overallBudget; // Convert back to actual spending
+    }
+  
+    const output = {};
+    for (const [category, prediction] of Object.entries(predictions)) {
+      output[category] = parseFloat(prediction.toFixed(2));
+    }
+  
+    return output;
+  }
+
+  async function analyzeCreditCards(debtToIncomeRato, averageTotalMonthlyBalance, newCards, 
+    annualFeePreference, bonusWeight, annualFeeLimit, ficoScore, 
+    highSpendingCategories, preferredStoresTravelPartners) {
+
+    try {
+        const creditCardsCollection = db.collection(credit_cards);
+
+        // Fetch data directly from MongoDB
+        const cursor = await creditCardsCollection.find({});
+        const creditCardsData = await cursor.toArray();
+
+        const creditCardsDataFrame = new DataFrame(creditCardsData);
+
+        creditCardsDataFrame.set('cardMonthAvg', creditCardsDataFrame.get('offerSpend').div(creditCardsDataFrame.get('offerDays')));
+
+        // Filter credit cards based on user preferences
+        const filteredCards = creditCardsDataFrame.filter(
+            (row) => (annualFeePreference ? row.get('annualFee') <= annualFeeLimit : row.get('annualFee')) &&
+                     row.get('cardMonthAvg') < averageTotalMonthlyBalance &&
+                     row.get('scoreMin') < ficoScore &&
+                     row.get('isBusiness') !== 'TRUE'
+        );
+
+        const addVals = creditCardsDataFrame.loc[creditCardsDataFrame.get('offerSpend').eq(0)];
+        const concatenatedCards = addVals.concat(filteredCards);
+
+        // Calculate scores
+        concatenatedCards.set('score', concatenatedCards.get('offerAmount').mul(bonusWeight) +
+                                     concatenatedCards.get('universalCashbackPercent').mul(1 - bonusWeight));
+
+        // Get top 3 cards
+        const topCards = concatenatedCards.sort('score', 'desc').head(3);
+
+        // Return the top 3 ideal credit cards
+        return topCards.get(['name', 'issuer', 'offerAmount', 'offerSpend', 'offerDays',
+                             'universalCashbackPercent', 'annualFee', 'url', 'imageUrl']).toJSON();
+    } finally {
+    }
+}
+
 
 // TOOD enums for notification frequency, etc.
 
@@ -117,7 +291,10 @@ module.exports = {
     getBudget,
     addBudget,
     updateBudget,
-    home
+    home,
+    getTop5AmountsPerCategoryItem,
+    predictSpendingWithBudget,
+    analyzeCreditCards
 }; 
 
 const main = async() => {
@@ -148,7 +325,6 @@ const main = async() => {
 
     // const newBudget = {"transportation": "20,000", "rent": "10,000"}
     // await updateBudget(db, newUser.username, newBudget)
-
 }; 
     
 main();

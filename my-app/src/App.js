@@ -13,7 +13,7 @@ import BudgetGraphs from './BudgetGraphs';
 import NewBudget from './newBudget';
 
 function App() {
-
+ 
   return (
     <Router>
       <div className="App">
