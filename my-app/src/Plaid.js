@@ -27,14 +27,15 @@ function Plaid(props) {
       setToken(linkToken);
     } else {
       const response = await fetch("/api/create_link_token", {});
-      const data = await response.json();
+      // respones is ok and status 200, so that's good
+      // console.log(response.status);
+      const data = await response.text();
+      console.log(data);
+      // It doesnt get here
       setToken(data.link_token);
       localStorage.setItem("link_token", data.link_token);
     }
   }, [setToken]);
-
-  console.log('test');
-  console.log(process.env.PLAID_CLIENT_ID);
 
   // Fetch balance data
   const getBalance = React.useCallback(async () => {

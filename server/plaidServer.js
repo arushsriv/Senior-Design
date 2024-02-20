@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const app = express();
-
 app.use(
   // FOR DEMO PURPOSES ONLY
   // Use an actual secret key in production

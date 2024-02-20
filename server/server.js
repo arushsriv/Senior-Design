@@ -151,10 +151,11 @@ app.post('/updatebudget', async (req, resp) => {
 })
 
 
-const port = 8000;
+const port = 8080;
 
 // start the app and connect to the DB
 app.listen(port, async () => {
   db = await lib.connect(url);
+  console.log("hereeee");
   console.log(`Express server running on port:${port}`);
 });
