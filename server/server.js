@@ -96,17 +96,16 @@ app.get('/home/:username', async (req, resp) => {
 
 // User
 app.post('/adduser', async (req, resp) => {
-  if (!req.body.username || !req.body.password || !req.body.first_name || !req.body.last_name || !req.body.email ) {
+  if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.password ) {
       return resp.status(404).json({ error: 'not all fields filled out!' });
   } try {
       const newUser = new Object(); 
-      newUser._id = req.body.username;
-      newUser.password = req.body.password;
       newUser.first_name = req.body.first_name;
       newUser.last_name = req.body.last_name;
       newUser.email = req.body.email;
-      await lib.addUser(db,  newUser, req.body.username); 
-      return resp.status(201).json({ message: `User added with username ${req.body.username}` });
+      newUser.password = req.body.password;
+      await lib.addUser(db, newUser, req.body.first_name); 
+      return resp.status(201).json({ message: `User added with username ${req.body.first_name}` });
   } catch (err) {
       return resp.status(500).json({ error: `try again later with ${err}`});
   }

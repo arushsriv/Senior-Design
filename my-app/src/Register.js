@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { createUser } from './loginRegisterAPI';
 import ".//css/register.css";
+import axios from 'axios';
 
 function Register() {
   const [id, setId] = useState('');
@@ -60,6 +61,18 @@ function Register() {
   // }
 
   const handleSubmit = (e) => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.post(`http://localhost:8000/adduser`);
+        console.log('API Response:', response);
+        setFirstName(response.data.firstName);
+        console.log('first name:', response.data.firstName);
+      } catch (error) {
+        console.error('Error adding user:', error);
+      }
+    };
+  
+    fetchUser();
     e.preventDefault();
     const obj = {
       id, password, email, firstName, lastName, friends, friendsReq,
@@ -86,7 +99,9 @@ function Register() {
           <input className="email" value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Password' />
         </div>
         <div className="div-wrapper">
-          <button className="signup" type="submit">Sign Up</button>
+          <a href="/home">
+            <button className="signup" type="submit">Sign Up</button>
+          </a>
           {/* <a href="/home">
             <button type="button" className="loginButton link-button">Sign Up</button>
           </a> */}
