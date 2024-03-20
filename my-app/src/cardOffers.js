@@ -9,15 +9,15 @@ import "./css/cardOffers.css"
 const CardFilterForm = ({ onSubmit, hideForm }) => {
 
   const [formData, setFormData] = useState({
-    debt: .2,
-    newCards: 1,
-    annualFeePreference: 'yes',
-    annualFeeLimit: 100,
-    averageTotalMonthlyBalance: 1000,
-    ficoScore: 700,
-    bonusWeight: .4,
-    highSpending: 'travel',
-    preferredStore: 'amazon'
+    debt: 0,
+    newCards: 0,
+    annualFeePreference: '',
+    annualFeeLimit: 0,
+    averageTotalMonthlyBalance: 0,
+    ficoScore: 0,
+    bonusWeight: 0,
+    highSpending: '',
+    preferredStore: ''
   });
 
   const handleChange = (e) => {
@@ -156,7 +156,7 @@ const CardOffersPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const handleFilterSubmit = async (formData) => {
     try {
-      const response = await fetch('http://localhost:8000/getTopCreditCards', {
+      const response = await fetch('http://localhost:8080/getTopCreditCards', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

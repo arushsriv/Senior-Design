@@ -21,7 +21,7 @@ const MonthlyBreakdown = () => {
       console.log('fetch')
       try {
         console.log('fetch2')
-        const response = await axios.get(`http://localhost:8000/top5/${formattedDate}`);
+        const response = await axios.get(`http://localhost:8080/top5/${formattedDate}`);
         console.log('API Response:', response);
         setTop5Data(response.data.top5Data);
         console.log('top5Data:', response.data.top5Data);
