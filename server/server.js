@@ -80,6 +80,19 @@ app.get("/api/balance", async (req, res, next) => {
   });
 });
 
+// Fetches transactions using the Node client library for Plaid
+app.get("/api/transactions", async (req, res, next) => {
+  try {
+    const access_token = req.session.access_token;
+    const transactionResponse = await client.transactionsSync({ access_token });
+    res.json({
+      Transaction: transactionResponse.data,
+    });
+  } catch (err) {
+    return resp.status(500).json({ error: `error: ${err}` });
+  }
+});
+
 app.get('/home/:username', async (req, resp) => {
   if (!req.params.username) {
     return resp.status(404).json({ error: 'username not provided' });
