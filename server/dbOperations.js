@@ -14,8 +14,7 @@ const connect = async (url) => {
 }; 
 
 // User
-const addUser = async (db, newUser, username) => {
-    newUser._id = username;
+const addUser = async (db, newUser) => {
     try {
         const result = await db.collection('users').insertOne(newUser);
         return result;
