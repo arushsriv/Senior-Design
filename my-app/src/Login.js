@@ -4,10 +4,9 @@ import MainPage from './MainPage';
 import { toast } from 'react-toastify';
 import { validateLogin } from './loginRegisterAPI';
 import  ".//css/login.css";
-
-
-
-const config = require('./config.json');
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 export default function Login() {
 // function Login() {
@@ -16,59 +15,64 @@ export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch(`http://${config.server_host}:${config.server_port}/`)
-    .then(res => res.json())
-    .then(resJson => {
-      setPassword(resJson)
-    })
+    sessionStorage.clear();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoggedIn(true);
+    try {
+      const response = await axios.post('http://localhost:8080/login', {
+        username, 
+        password
+      });
+
+      if (response.status === 200) {
+        setLoggedIn(true); 
+        console.log("User data:", response.data); 
+        sessionStorage.setItem('username', username); 
+        window.location.href = '/home';
+      } else {
+        toast.error("Login failed: " + (response.data.error || "Invalid credentials"));
+        setLoggedIn(false); 
+      }
+    } catch (error) {
+      console.error("Login request failed:", error); 
+      toast.error("Login request failed: " + (error.response?.data?.error || "Network error"));
+    }
+  };
+
+  const handleSignUpRedirect = (e) => {
+    e.preventDefault();
+    window.location.href = '/register'
   };
   
   return (
-        // <div>
-        //   {!loggedIn ? (
-        <div className="index" onSubmit={handleSubmit}>
+    <div>
+        <form className="index" onSubmit={handleSubmit}>
           <div className="div">
             <div className="text-wrapper">Budgify</div>
             <div className="text-wrapper-2">
               <button data-testid="submitButton" className="loginButton" type="button"> Forgot Password? </button>
             </div>
-            {/* <button data-testid="submitButton" className="loginButton">Forgot Password</button> */}
-            <div className="text-wrapper-3">Email</div>
+            <div className="text-wrapper-3">Username</div>
             <div className="text-wrapper-4">Password</div>
             
             <div className="div-wrapper2">
-            <a href="/home">
-            <button data-testid="submitButton" className="text-wrapper-5" type="submit">Login</button>
-            </a>
-            {/* <a href="/home">
-              <button data-testid="submitButton" className="loginButton" type="submit">Login</button>
-            </a> */}
+              <button className="text-wrapper-5" type="submit">Login</button>
             </div>
             <div className="div-wrapper">
-            <a href="/register">
-            <button className="text-wrapper-5" >Sign Up</button>
-            {/* <a href="/register">
-              <button data-testid="submitButton" className="loginButton">Register</button>
-            </a> */}
-            </a>
+              <button className="text-wrapper-5" onClick={handleSignUpRedirect} type="button">Sign Up</button>
             </div>
             <div className="frame-2">
-              <input className="text-wrapper-7" value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder='123@abc.com' id="username" name="username"/>
+              <input className="text-wrapper-7" value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder='username' id="username" name="username"/>
             </div>
             <div className="password-wrapper">
               <input className="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder='password' id="password" name="password"/>
             </div>
           </div>
-        </div>
-      //   ) : (
-      //     loggedIn && <MainPage username={username} password={password} />
-      //   )}
-      // </div>
+        </form>
+        <ToastContainer />
+      </div>
       );
 }
 

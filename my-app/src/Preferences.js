@@ -172,7 +172,7 @@ function Preferences() {
       };
   
       // Make a POST request to your server
-      const response = await axios.post('http://localhost:8000/save-preferences', preferencesData);
+      const response = await axios.post('http://localhost:8080/save-preferences', preferencesData);
   
       console.log('Preferences saved successfully:', response.data);
     } catch (error) {

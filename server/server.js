@@ -7,6 +7,7 @@ const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 
 const cors = require("cors")
+const bcrypt = require('bcrypt');
 
 // import database functions
 const lib = require('./dbOperations');
@@ -16,7 +17,11 @@ let db;
 // MongoDB URL
 const url = 'mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority'
 
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:3000', // replace with your client's origin
+  credentials: true
+}));
 app.use(
   // FOR DEMO PURPOSES ONLY
   // Use an actual secret key in production
@@ -109,21 +114,64 @@ app.get('/home/:username', async (req, resp) => {
 
 // User
 app.post('/adduser', async (req, resp) => {
-  if (!req.body.username || !req.body.password || !req.body.first_name || !req.body.last_name || !req.body.email ) {
-      return resp.status(404).json({ error: 'not all fields filled out!' });
-  } try {
-      const newUser = new Object(); 
-      newUser._id = req.body.username;
-      newUser.password = req.body.password;
-      newUser.first_name = req.body.first_name;
-      newUser.last_name = req.body.last_name;
-      newUser.email = req.body.email;
-      await lib.addUser(db,  newUser, req.body.username); 
-      return resp.status(201).json({ message: `User added with username ${req.body.username}` });
-  } catch (err) {
-      return resp.status(500).json({ error: `try again later with ${err}`});
+  const newUser = new Object(); 
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10); 
+  newUser._id = req.body.username; 
+  newUser.firstName = req.body.firstName;
+  newUser.lastName = req.body.lastName;
+  newUser.email = req.body.email;
+  newUser.username = req.body.username;
+  newUser.password = hashedPassword;
+  await lib.addUser(db, newUser, req.body.username); 
+  return resp.status(201).json({ message: `User added with username ${req.body.username}` });
+});
+
+// hardcode credit card
+app.post('/addcc', async (req, resp) => {
+  const username = req.body.username;
+  if (username == 'arushis') {
+    await lib.addCc(db, username); 
+    return resp.status(200).json({ message: `Credit card info udpated for user ${username}` });
+  } else if (username == 'jwang') {
+    await lib.addCc(db, username); 
+    return resp.status(200).json({ message: `Credit card info udpated for user ${username}` });
+  } else if (username == 'riakul') {
+    await lib.addCc(db, username); 
+    return resp.status(200).json({ message: `Credit card info udpated for user ${username}` });
   }
-})
+});
+
+// login
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const user = await lib.getUser(db, username); 
+  if (user) {
+    if (bcrypt.compareSync(password, user.password)) {
+      // store user info in session
+      req.session.user = { username: user.username, email: user.email };
+      console.log(req.session.user);
+      res.json({ message: "Login successful", user: { username: user.username, email: user.email } });
+    } else {
+      // invalid password
+      console.log("Invalid {assword");
+      res.status(401).json({ error: "Invalid Password" });
+    }
+  } else {
+    // user not found
+    console.log("User not found");
+    res.status(401).json({ error: "User not found" });
+  }
+});
+
+// session
+app.get('/session', (req, res) => {
+  if (req.session.user) {
+    res.json(req.session.user); 
+  } else {
+    console.log(req.session.user);
+    res.status(401).json({ error: "Not logged in" });
+  }
+});
 
 app.get('/getuser/:username', async (req, resp) => {
   if (!req.params.username) {
