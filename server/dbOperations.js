@@ -13,6 +13,16 @@ const connect = async (url) => {
     }
 }; 
 
+const getUser = async (db, username) => {
+  try {
+    const user = await db.collection('users').findOne({ _id: username});
+    return user; 
+  } catch (err) {
+    console.error("Error in getUserFromDatabase:", err); 
+    throw err; 
+  }
+}
+
 // User
 const addUser = async (db, newUser) => {
     try {
@@ -26,15 +36,6 @@ const addUser = async (db, newUser) => {
 async function home(db, username) {
     try {
         const result = await db.collection('users').findOne({_id: username});
-        return result;
-    } catch (err) {
-        throw new Error(`cannot get user with ${err}`);
-    }
-}
-
-async function getUser(db, username) {
-    try {
-        const result = await db.collection('users').findOne({ _id: username});
         return result;
     } catch (err) {
         throw new Error(`cannot get user with ${err}`);

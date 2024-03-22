@@ -8,7 +8,7 @@
   
   .register .div {
     background-color: #065744;
-    height: 982px;
+    height: 1020px;
     position: relative;
     width: 1512px;
   }
@@ -76,6 +76,17 @@
     top: 435px;
     width: 1380px;
   }
+
+  .register .frame-4 {
+    background-color: #fff8f8;
+    border-radius: 10px;
+    height: 83px;
+    left: 66px;
+    overflow: hidden;
+    position: absolute;
+    top: 570px;
+    width: 1380px;
+  }
   
   .register .frame-2 {
     background-color: #fff8f8;
@@ -84,7 +95,7 @@
     left: 66px;
     overflow: hidden;
     position: absolute;
-    top: 570px;
+    top: 705px;
     width: 1380px;
   }
   
@@ -96,7 +107,7 @@
     left: 507px;
     overflow: hidden;
     position: absolute;
-    top: 705px;
+    top: 840px;
     width: 595px;
   }
   
@@ -119,7 +130,7 @@
     left: 507px;
     overflow: hidden;
     position: absolute;
-    top: 832px;
+    top: 940px;
     width: 595px;
   }
   

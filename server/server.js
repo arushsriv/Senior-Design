@@ -7,6 +7,7 @@ const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 
 const cors = require("cors")
+const bcrypt = require('bcrypt');
 
 // import database functions
 const lib = require('./dbOperations');
@@ -110,14 +111,35 @@ app.get('/home/:username', async (req, resp) => {
 // User
 app.post('/adduser', async (req, resp) => {
   const newUser = new Object(); 
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10); 
+  newUser._id = req.body.username; 
   newUser.firstName = req.body.firstName;
   newUser.lastName = req.body.lastName;
   newUser.email = req.body.email;
-  newUser.password = req.body.password;
-  await lib.addUser(db, newUser, req.body.firstName); 
-  return resp.status(201).json({ message: `User added with username ${req.body.firstName}` });
+  newUser.username = req.body.username;
+  newUser.password = hashedPassword
+  await lib.addUser(db, newUser, req.body.username); 
+  return resp.status(201).json({ message: `User added with username ${req.body.username}` });
 });
 
+// login
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const user = await lib.getUser(db, username); 
+  if (user) {
+    if (bcrypt.compareSync(password, user.password)) {
+      res.json({ message: "Login successful", user: { username: user.username, email: user.email } });
+    } else {
+      // invalid password
+      console.log("Invalid {assword");
+      res.status(401).json({ error: "Invalid Password" });
+    }
+  } else {
+    // user not found
+    console.log("User not found");
+    res.status(401).json({ error: "User not found" });
+  }
+});
 
 app.get('/getuser/:username', async (req, resp) => {
   if (!req.params.username) {

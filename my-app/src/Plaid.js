@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 function Plaid(props) {
   const [token, setToken] = useState(null);
   const [data, setData] = useState(null);
+  const [transaction, setTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const onSuccess = useCallback(async (publicToken) => {
@@ -20,6 +21,8 @@ function Plaid(props) {
       body: JSON.stringify({ public_token: publicToken }),
     });
     await getBalance();
+    // await getTransactioins(); 
+    await fetchCustomTransactions();
   }, []);
 
   // Creates a Link token
@@ -36,7 +39,7 @@ function Plaid(props) {
     }
   }, [setToken]);
 
-  // Fetch balance data
+  // Fetch balance data 
   const getBalance = React.useCallback(async () => {
     setLoading(true);
     const response = await fetch("/api/balance", {});
@@ -44,6 +47,25 @@ function Plaid(props) {
     setData(data);
     setLoading(false);
   }, [setData, setLoading]);
+
+  const fetchCustomTransactions = async () => {
+    try {
+      const response = await fetch('/csvjson.json');
+      const data = await response.json(); 
+      setTransaction(data); 
+    } catch (error) {
+      console.error("Error fetching custom transactions:", error); 
+    }
+  };
+
+   // Fetch transactions
+  //  const getTransactioins = React.useCallback(async () => {
+  //   setLoading(true);
+  //   const response = await fetch("/api/transactions", {});
+  //   const transaction = await response.json();
+  //   setTransaction(transaction);
+  //   setLoading(false);
+  // }, [setTransaction, setLoading]);
 
   let isOauth = false;
 
@@ -70,6 +92,7 @@ function Plaid(props) {
   }, [token, isOauth, ready, open]);
 
   console.log(data);
+  console.log(transaction);
   
   return (
       <div className="layout">
