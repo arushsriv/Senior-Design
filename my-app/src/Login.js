@@ -14,6 +14,9 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +29,7 @@ export default function Login() {
       if (response.status === 200) {
         setLoggedIn(true); 
         console.log("User data:", response.data); 
+        sessionStorage.setItem('username', username); 
         window.location.href = '/home';
       } else {
         toast.error("Login failed: " + (response.data.error || "Invalid credentials"));

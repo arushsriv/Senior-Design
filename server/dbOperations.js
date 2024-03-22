@@ -261,6 +261,113 @@ async function getTopCreditCards(db, req) {
   }
 }
 
+// cc
+const addCc = async (db, username) => {
+  if (username == 'arushis') {
+    try {
+      const ccInfo = [
+        {
+          cc_name: "Platinum (Morgan Stanley)",
+          cc_issuer: "AMERICAN_EXPRESS",
+          cc_network: "AMERICAN_EXPRESS",
+          cc_currency: "AMERICAN_EXPRESS",
+          cc_url: "https://apply.americanexpress.com/amex-morgan-stanley-credit-cards/?page_url=1",
+          cc_imageurl: "https://offeroptimist.com/images/amex/platinum-morgan-stanley.webp"
+        }, {
+          cc_name: "AAdvantage Platinum Select",
+          cc_issuer: "CITI",
+          cc_network: "MASTERCARD",
+          cc_currency: "AMERICAN",
+          cc_url: "https://creditcards.aa.com/citi-business-card-american-airlines-direct/",
+          cc_imageurl: "https://offeroptimist.com/images/citi/aadvantage-platinum-select.webp"
+        }, {
+          cc_name: "AARP Essential Rewards",
+          cc_issuer: "BARCLAYS",
+          cc_network: "MASTERCARD",
+          cc_currency: "USD",
+          cc_url: "https://cards.barclaycardus.com/banking/cards/aarp-essential-rewards-mastercard/",
+          cc_imageurl: "https://offeroptimist.com/images/barclays/aarp-essential-rewards.png"
+        }
+      ];
+      const result = await db.collection('users').updateOne(
+        { _id: username },
+        { $set: { credit_cards: ccInfo } }
+      );
+      return result; 
+    } catch (err) {
+      throw new Error('Cannot update user with cc info');
+    }
+  } else if (username == 'jwang') {
+    try {
+      const ccInfo = [
+        {
+          cc_name: "AAdvantage Aviator Red World Elite",
+          cc_issuer: "BARCLAYS",
+          cc_network: "MASTERCARD",
+          cc_currency: "AMERICAN",
+          cc_url: "https://cards.barclaycardus.com/banking/cards/aadvantage-aviator-red-world-elite-mastercard/",
+          cc_imageurl: "https://offeroptimist.com/images/barclays/aadvantage-aviator-red-world-elite.png"
+        }, {
+          cc_name: "Blue Cash Preferred",
+          cc_issuer: "AMERICAN_EXPRESS",
+          cc_network: "AMERICAN_EXPRESS",
+          cc_currency: "USD",
+          cc_url: "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+          cc_imageurl: "https://offeroptimist.com/images/amex/blue-cash-preferred.webp"
+        }, {
+          cc_name: "Premium Rewards Elite",
+          cc_issuer: "BANK_OF_AMERICA",
+          cc_network: "VISA",
+          cc_currency: "BANK_OF_AMERICA",
+          cc_url: "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+          cc_imageurl: "https://offeroptimist.com/images/bankofamerica/premium-rewards-elite.png"
+        }
+      ];
+      const result = await db.collection('users').updateOne(
+        { _id: username },
+        { $set: { credit_cards: ccInfo } }
+      );
+      return result; 
+    } catch (err) {
+      throw new Error('Cannot update user with cc info');
+    }
+  } else if (username == 'riakul') {
+    try {
+      const ccInfo = [
+        {
+          cc_name: "Sapphire Reserve",
+          cc_issuer: "CHASE",
+          cc_network: "VISA",
+          cc_currency: "CHASE",
+          cc_url: "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
+          cc_imageurl: "https://offeroptimist.com/images/chase/sapphire-reserve.png"
+        }, {
+          cc_name: "Delta SkyMiles Gold",
+          cc_issuer: "AMERICAN_EXPRESS",
+          cc_network: "AMERICAN_EXPRESS",
+          cc_currency: "DELTA",
+          cc_url: "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          cc_imageurl: "https://offeroptimist.com/images/amex/delta-skymiles-gold.jpg"
+        }, {
+          cc_name: "Green",
+          cc_issuer: "AMERICAN_EXPRESS",
+          cc_network: "AMERICAN_EXPRESS",
+          cc_currency: "AMERICAN_EXPRESS",
+          cc_url: "https://www.americanexpress.com/us/credit-cards/card/green/",
+          cc_imageurl: "https://offeroptimist.com/images/amex/green.webp"
+        }
+      ];
+      const result = await db.collection('users').updateOne(
+        { _id: username },
+        { $set: { credit_cards: ccInfo } }
+      );
+      return result; 
+    } catch (err) {
+      throw new Error('Cannot update user with cc info');
+    }
+  }
+}
+
 module.exports = {
     connect,
     addUser,
@@ -273,6 +380,7 @@ module.exports = {
     addBudget,
     updateBudget,
     home,
+    addCc,
     getTop5AmountsPerCategoryItem,
     savePreferences,
     getTopCreditCards

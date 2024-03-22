@@ -32,18 +32,21 @@ export default function Register() {
   async function displayRegister(obj) {
     try {
       const response = await axios.post('http://localhost:8080/adduser', obj);
-      console.log("after axios post");
       if (response.status === 201) {
-        console.log("registered success");
         toast.success("Registered successfully!");
+        sessionStorage.setItem('username', username); 
+        if (obj.username === 'arushis') {
+          await axios.post('http://localhost:8080/addcc', { username: 'arushis' });
+        } else if (obj.username === 'jwang') {
+          await axios.post('http://localhost:8080/addcc', { username: 'jwang' });
+        } else if (obj.username === 'riakul') {
+          await axios.post('http://localhost:8080/addcc', { username: 'riakul' });
+        }
         window.location.href = '/home'; // redirect as needed 
-        console.log("redirected");
       } else {
-        console.log("registration failed");
         toast.error(`Registration failed: ${response.data.error || 'Unknown error'}`);
       }
     } catch (error) {
-      console.error("There was an error registering the user:", error);
       toast.error("Registration failed: " + (error.response?.data?.error || "Network error"));
     }
   }

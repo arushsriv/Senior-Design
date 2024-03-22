@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BudgetGraphs from './BudgetGraphs';
 import NewBudget from './newBudget';
 import CardFilterForm from './CardFilterForm'
+import { useEffect } from 'react';
 
 function App() {
  
