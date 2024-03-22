@@ -26,34 +26,32 @@ transaction_schema = {
 }
 
 credit_card_schema = {
-    {
-        "name": str,
-        "issuer": str,
-        "network": str,
-        "currency": str,
-        "offer": {
-            "amount": int,
-            "spend": int,
-            "days": int
-        },
-        "offerUrl": str,
-        "countsTowards524": bool,
-        "details": str,
-        "isBusiness": bool,
-        "annualFee": int,
-        "isAnnualFeeWaived": bool,
-        "scoreMin": int,
-        "universalCashbackPercent": int,
-        "url": str,
-        "imageUrl": str,
-        "credits": {
-            "Category1": int,
-            "Category2": int,
-            "Category3": int
-        }
+    "name": str,
+    "issuer": str,
+    "network": str,
+    "currency": str,
+    "offer": {
+        "amount": int,
+        "spend": int,
+        "days": int
+    },
+    "offerUrl": str,
+    "countsTowards524": bool,
+    "details": str,
+    "isBusiness": bool,
+    "annualFee": int,
+    "isAnnualFeeWaived": bool,
+    "scoreMin": int,
+    "universalCashbackPercent": int,
+    "url": str,
+    "imageUrl": str,
+    "credits": {
+        "Category1": int,
+        "Category2": int,
+        "Category3": int
     }
-
 }
+
 
 @app.route('/card-offers', methods=['POST'])
 def cardOffers():

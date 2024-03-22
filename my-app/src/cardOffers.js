@@ -31,6 +31,7 @@ const CardFilterForm = ({ onSubmit, hideForm }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
+    console.log(formData)
     hideForm();
   };
 

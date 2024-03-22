@@ -16,12 +16,11 @@ const MonthlyBreakdown = () => {
     const formattedDate = `${firstDayOfLastMonth.getFullYear()}-${(firstDayOfLastMonth.getMonth() + 1).toString().padStart(2, '0')}-01`;
     console.log(formattedDate)
     console.log(typeof(formattedDate))
-  
     const fetchTop5Data = async () => {
       console.log('fetch')
       try {
         console.log('fetch2')
-        const response = await axios.get(`http://localhost:8000/top5/${formattedDate}`);
+        const response = await axios.get(`http://localhost:8080/top5/${formattedDate}`);
         console.log('API Response:', response);
         setTop5Data(response.data.top5Data);
         console.log('top5Data:', response.data.top5Data);
