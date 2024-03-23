@@ -7,16 +7,24 @@ import Footer from './components/Footer';
 const config = require('./config.json');
 
 export default function MainPage() {
-  const [username, setUsername] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
-    const username = sessionStorage.getItem('username');
-    if (username === '' || username === null) {
+    const user = {
+      username: sessionStorage.getItem('username'),
+      firstName: sessionStorage.getItem('firstName'),
+      lastName: sessionStorage.getItem('lastName'),
+      email: sessionStorage.getItem('email'),
+      cc_imageurl_1: sessionStorage.getItem('cc_imageurl_1'),
+      cc_imageurl_2: sessionStorage.getItem('cc_imageurl_2'),
+      cc_imageurl_3: sessionStorage.getItem('cc_imageurl_3')
+    }
+    if (user.username === '' || user.username === null) {
       window.location.href = '/'; 
     }
-    setUsername(username);
+    setUserDetails(user);
   }, []); 
-  
+
   return (
     <div className="layout">
       <header  className="headerAppName">
@@ -34,11 +42,12 @@ export default function MainPage() {
           <div className="App">
             <div className="post-login-screen">
               <div className="gray-box">
-                <h1>Welcome {username}!</h1>
+                <h1>Welcome {userDetails.firstName} {userDetails.lastName}!</h1>
+                <h2> Your credit cards:</h2>
                 <div className="credit-card-container">
-                  <img src="/images/card1.png" alt="Credit Card 1" className="credit-card-image" />
-                  <img src="/images/card2.png" alt="Credit Card 2" className="credit-card-image" />
-                  <img src="/images/card3.png" alt="Credit Card 3" className="credit-card-image" />
+                  <img src={userDetails.cc_imageurl_1} alt="Credit Card 1" className="credit-card-image" />
+                  <img src={userDetails.cc_imageurl_2} alt="Credit Card 2" className="credit-card-image" />
+                  <img src={userDetails.cc_imageurl_3} alt="Credit Card 3" className="credit-card-image" />
                 </div>
 
                 <div className="credit-card-container">

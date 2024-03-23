@@ -12,7 +12,6 @@ export default function Login() {
 // function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     sessionStorage.clear();
@@ -27,13 +26,16 @@ export default function Login() {
       });
 
       if (response.status === 200) {
-        setLoggedIn(true); 
-        console.log("User data:", response.data); 
-        sessionStorage.setItem('username', username); 
+        sessionStorage.setItem('username', response.data.user.username); 
+        sessionStorage.setItem('firstName', response.data.user.firstName); 
+        sessionStorage.setItem('lastName', response.data.user.lastName); 
+        sessionStorage.setItem('email', response.data.user.email); 
+        sessionStorage.setItem('cc_imageurl_1', response.data.user.credit_cards[0].cc_imageurl)
+        sessionStorage.setItem('cc_imageurl_2', response.data.user.credit_cards[1].cc_imageurl)
+        sessionStorage.setItem('cc_imageurl_3', response.data.user.credit_cards[2].cc_imageurl)
         window.location.href = '/home';
       } else {
         toast.error("Login failed: " + (response.data.error || "Invalid credentials"));
-        setLoggedIn(false); 
       }
     } catch (error) {
       console.error("Login request failed:", error); 
