@@ -30,6 +30,10 @@ function Navigation() {
             <Link to={'/card-offers'} style={{ textDecoration: 'none' }}><b>Credit Card Recommendations</b></Link>
             <br />
           </li>
+          <li>
+            <Link to={'/'} style={{ textDecoration: 'none' }}><b>Logout</b></Link>
+            <br />
+          </li>
         </ul>
       </div>
     </nav>

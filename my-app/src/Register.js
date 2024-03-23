@@ -19,9 +19,7 @@ export default function Register() {
     const obj = {
       firstName, lastName, email, username, password
     };
-    console.log("before");
     displayRegister(obj);
-    console.log("success");
   };
 
   const handleLoginRedirect = (e) => {
@@ -34,7 +32,13 @@ export default function Register() {
       const response = await axios.post('http://localhost:8080/adduser', obj);
       if (response.status === 201) {
         toast.success("Registered successfully!");
-        sessionStorage.setItem('username', username); 
+        sessionStorage.setItem('username', response.data.user.username); 
+        sessionStorage.setItem('email', response.data.user.email); 
+        sessionStorage.setItem('firstName', response.data.user.firstName); 
+        sessionStorage.setItem('lastName', response.data.user.lastName); 
+        sessionStorage.setItem('cc_imageurl_1', response.data.user.credit_cards[0].cc_imageurl)
+        sessionStorage.setItem('cc_imageurl_2', response.data.user.credit_cards[1].cc_imageurl)
+        sessionStorage.setItem('cc_imageurl_3', response.data.user.credit_cards[2].cc_imageurl)
         if (obj.username === 'arushis') {
           await axios.post('http://localhost:8080/addcc', { username: 'arushis' });
         } else if (obj.username === 'jwang') {

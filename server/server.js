@@ -148,9 +148,14 @@ app.post('/login', async (req, res) => {
   if (user) {
     if (bcrypt.compareSync(password, user.password)) {
       // store user info in session
-      req.session.user = { username: user.username, email: user.email };
-      console.log(req.session.user);
-      res.json({ message: "Login successful", user: { username: user.username, email: user.email } });
+      req.session.user = { 
+        username: user.username, 
+        email: user.email,
+        firstName: user.firstName, 
+        lastName: user.lastName,
+        credit_cards: user.credit_cards
+      };
+      res.json({ message: "Login successful", user: req.session.user });
     } else {
       // invalid password
       console.log("Invalid {assword");
