@@ -23,6 +23,25 @@ const getUser = async (db, username) => {
   }
 }
 
+const savePreferences = async (db, preferencesData) => {
+  try {
+    // Find the user by username and update preferences
+    const result = await db.collection('preferences').insertOne(preferencesData);
+    //   { username: username },
+    //   { $set: preferencesData },
+    //   { upsert: true }
+    // );
+
+    console.log('Preferences saved successfully:', result);
+    // return { success: true, message: 'Preferences saved successfully' };
+    return result; 
+  } catch (error) {
+    throw new Error('cannot add new user');
+    // console.error('Error saving preferences:', error);
+    // return { success: false, message: 'Error saving preferences' };
+  }
+};
+
 // User
 const addUser = async (db, newUser) => {
     try {
@@ -171,22 +190,7 @@ async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
 
 
 
-const savePreferences = async (preferencesData, username) => {
-  try {
-    // Find the user by username and update preferences
-    const result = await db.collection('users').updateOne(
-      { username: username },
-      { $set: preferencesData },
-      { upsert: true }
-    );
 
-    console.log('Preferences saved successfully:', result);
-    return { success: true, message: 'Preferences saved successfully' };
-  } catch (error) {
-    console.error('Error saving preferences:', error);
-    return { success: false, message: 'Error saving preferences' };
-  }
-};
 
 async function getTopCreditCards(db, req) {
   // User input variables
@@ -264,6 +268,7 @@ async function getTopCreditCards(db, req) {
 // cc
 const addCc = async (db, username) => {
   if (username == 'arushis') {
+    console.log("user is arushis");
     try {
       const ccInfo = [
         {
@@ -274,12 +279,12 @@ const addCc = async (db, username) => {
           cc_url: "https://apply.americanexpress.com/amex-morgan-stanley-credit-cards/?page_url=1",
           cc_imageurl: "https://offeroptimist.com/images/amex/platinum-morgan-stanley.webp"
         }, {
-          cc_name: "AAdvantage Platinum Select",
+          cc_name: "Secured",
           cc_issuer: "CITI",
           cc_network: "MASTERCARD",
           cc_currency: "AMERICAN",
-          cc_url: "https://creditcards.aa.com/citi-business-card-american-airlines-direct/",
-          cc_imageurl: "https://offeroptimist.com/images/citi/aadvantage-platinum-select.webp"
+          cc_url: "https://www.citi.com/credit-cards/citi-secured-credit-card",
+          cc_imageurl: "https://www.citi.com/CRD/images/citi-secured-card/citi-secured-card_222x140.png"
         }, {
           cc_name: "AARP Essential Rewards",
           cc_issuer: "BARCLAYS",
@@ -301,12 +306,12 @@ const addCc = async (db, username) => {
     try {
       const ccInfo = [
         {
-          cc_name: "AAdvantage Aviator Red World Elite",
-          cc_issuer: "BARCLAYS",
-          cc_network: "MASTERCARD",
-          cc_currency: "AMERICAN",
-          cc_url: "https://cards.barclaycardus.com/banking/cards/aadvantage-aviator-red-world-elite-mastercard/",
-          cc_imageurl: "https://offeroptimist.com/images/barclays/aadvantage-aviator-red-world-elite.png"
+          cc_name: "Everyday",
+          cc_issuer: "AMERICAN_EXPRESS",
+          cc_network: "AMERICAN_EXPRESS",
+          cc_currency: "AMERICAN_EXPRESS",
+          cc_url: "https://www.americanexpress.com/us/credit-cards/card/amex-everyday/",
+          cc_imageurl: "https://offeroptimist.com/images/amex/everyday.png"
         }, {
           cc_name: "Blue Cash Preferred",
           cc_issuer: "AMERICAN_EXPRESS",
@@ -342,12 +347,12 @@ const addCc = async (db, username) => {
           cc_url: "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
           cc_imageurl: "https://offeroptimist.com/images/chase/sapphire-reserve.png"
         }, {
-          cc_name: "Delta SkyMiles Gold",
-          cc_issuer: "AMERICAN_EXPRESS",
-          cc_network: "AMERICAN_EXPRESS",
-          cc_currency: "DELTA",
-          cc_url: "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
-          cc_imageurl: "https://offeroptimist.com/images/amex/delta-skymiles-gold.jpg"
+          cc_name: "Platinum Plus",
+          cc_issuer: "BANK_OF_AMERICA",
+          cc_network: "MASTERCARD",
+          cc_currency: "USD",
+          cc_url: "https://www.bankofamerica.com/smallbusiness/credit-cards/products/platinum-plus-business-credit-card/?campaign=4053445~YT~en_US",
+          cc_imageurl: "https://offeroptimist.com/images/bankofamerica/platinum-plus.webp"
         }, {
           cc_name: "Green",
           cc_issuer: "AMERICAN_EXPRESS",

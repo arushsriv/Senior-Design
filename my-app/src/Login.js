@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 export default function Login() {
-// function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,6 +25,7 @@ export default function Login() {
       });
 
       if (response.status === 200) {
+        console.log(response);
         sessionStorage.setItem('username', response.data.user.username); 
         sessionStorage.setItem('firstName', response.data.user.firstName); 
         sessionStorage.setItem('lastName', response.data.user.lastName); 

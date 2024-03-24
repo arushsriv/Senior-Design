@@ -1,7 +1,6 @@
 import './App.css';
-
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import './/css/PostLoginScreen.css';
 // import { Link } from 'react-router-dom';
 import LongButton from './components/LogButton';
@@ -13,7 +12,8 @@ import axios from 'axios';
 function Preferences() {
 
   // const [loggedInUser] = useState('riakul');
-  const occupations = ["Doctor", "Lawyer", "Engineer", "Teacher", "Other"];
+  const [username, setUsername] = useState('');
+  const occupations = ["Doctor", "Lawyer", "Engineer", "Teacher", "Student", "Other"];
   const incomes = ["<$10,000", "$10,000 - $30,000", "$30,000 - $70,000", "$70,000 - $100,000", "$100,000 - $150,000", "$150,000+"];
   const ages = ["<18", "18 - 25", "25 - 35", "35 - 65", "65+"];
   const fee_pref = ["Yes", "No"];
@@ -27,6 +27,11 @@ function Preferences() {
   // Return classes based on whether item is checked
   var isNotificationChecked = (item) => state.notifications.includes(item) ? "checked-item" : "not-checked-item";
   // Added
+
+  useEffect(() => {
+    const username = sessionStorage.getItem('username');
+    setUsername(username);
+  }, []); 
 
   const [state, setState] = useState({
     fname: "",
@@ -150,6 +155,7 @@ function Preferences() {
     try {
       // Create an object with the preferences data
       const preferencesData = {
+        username: username,
         fname: state.fname,
         lname: state.lname,
         future_goal: state.future_goal,
@@ -173,10 +179,15 @@ function Preferences() {
   
       // Make a POST request to your server
       const response = await axios.post('http://localhost:8080/save-preferences', preferencesData);
+      if (response.status === 201) {
+        toast.success("Registered successfully!");
+      } else {
+        toast.error(`Registration failed: ${response.data.error || 'Unknown error'}`);
+      }
   
       console.log('Preferences saved successfully:', response.data);
     } catch (error) {
-      console.error('Error saving preferences:', error);
+      toast.error("Registration failed: " + (error.response?.data?.error || "Network error"));
     }
   };
 
