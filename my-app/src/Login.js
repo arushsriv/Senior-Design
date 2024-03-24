@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import MainPage from './MainPage';
+import MainPage from './mainPage';
 import { toast } from 'react-toastify';
 import { validateLogin } from './loginRegisterAPI';
 import  ".//css/login.css";

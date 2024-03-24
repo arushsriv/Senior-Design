@@ -157,7 +157,7 @@ const CardOffersPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const handleFilterSubmit = async (formData) => {
     try {
-      const response = await fetch('http://localhost:8000/getTopCreditCards', {
+      const response = await fetch('http://localhost:8080/getTopCreditCards', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
