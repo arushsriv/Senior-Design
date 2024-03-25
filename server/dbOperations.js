@@ -22,7 +22,7 @@ const getUser = async (db, username) => {
     throw err; 
   }
 }
-/*
+
 const savePreferences = async (db, preferencesData) => {
   try {
     // Find the user by username and update preferences
@@ -41,7 +41,7 @@ const savePreferences = async (db, preferencesData) => {
     // return { success: false, message: 'Error saving preferences' };
   }
 };
-*/
+
 
 // User
 const addUser = async (db, newUser) => {
@@ -74,6 +74,7 @@ const addPreferences = async (db, username, preferences) => {
 const getPreferences = async (db, username) => {
     try {
         const result = await getUser(db, username);
+        console.log("get preference result: ", result);
         return result.preferences;
     } catch (err) {
         throw new Error(`cannot get preferences for user ${username}`);
@@ -189,17 +190,6 @@ async function getTop5AmountsPerCategoryItem(db, desiredMonth, user) {
 }
 
 
-
-const savePreferences = async (preferencesData, username) => {
-  try {
-    // Find the user by username and update preferences
-    const result = await db.collection('users').updateOne(
-      { username: username },
-      { $set: preferencesData },
-      { upsert: true }
-    );
-  }
-}
 
 
 async function getTopCreditCards(db, req) {
