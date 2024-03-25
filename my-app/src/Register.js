@@ -34,26 +34,34 @@ export default function Register() {
         toast.success("Registered successfully!");
         sessionStorage.setItem('username', response.data.user.username); 
         sessionStorage.setItem('email', response.data.user.email); 
-        sessionStorage.setItem('firstName', response.data.user.firstName); 
+        sessionStorage.setItem('firstName', response.data.user.firstName);
         sessionStorage.setItem('lastName', response.data.user.lastName); 
-        sessionStorage.setItem('cc_imageurl_1', response.data.user.credit_cards[0].cc_imageurl)
-        sessionStorage.setItem('cc_imageurl_2', response.data.user.credit_cards[1].cc_imageurl)
-        sessionStorage.setItem('cc_imageurl_3', response.data.user.credit_cards[2].cc_imageurl)
-        if (obj.username === 'arushis') {
+        if (response.data.user.username === 'arushis') {
           await axios.post('http://localhost:8080/addcc', { username: 'arushis' });
-        } else if (obj.username === 'jwang') {
+          sessionStorage.setItem('cc_imageurl_1', response.data.user.credit_cards[0].cc_imageurl)
+          sessionStorage.setItem('cc_imageurl_2', response.data.user.credit_cards[1].cc_imageurl)
+          sessionStorage.setItem('cc_imageurl_3', response.data.user.credit_cards[2].cc_imageurl)
+          window.location.href = '/home'; // redirect as needed 
+        } else if (response.data.user.username === 'jwang') {
           await axios.post('http://localhost:8080/addcc', { username: 'jwang' });
-        } else if (obj.username === 'riakul') {
+          sessionStorage.setItem('cc_imageurl_1', response.data.user.credit_cards[0].cc_imageurl)
+          sessionStorage.setItem('cc_imageurl_2', response.data.user.credit_cards[1].cc_imageurl)
+          sessionStorage.setItem('cc_imageurl_3', response.data.user.credit_cards[2].cc_imageurl)
+          window.location.href = '/home'; // redirect as needed 
+        } else if (response.data.user.username === 'riakul') {
           await axios.post('http://localhost:8080/addcc', { username: 'riakul' });
+          sessionStorage.setItem('cc_imageurl_1', response.data.user.credit_cards[0].cc_imageurl)
+          sessionStorage.setItem('cc_imageurl_2', response.data.user.credit_cards[1].cc_imageurl)
+          sessionStorage.setItem('cc_imageurl_3', response.data.user.credit_cards[2].cc_imageurl)
+          window.location.href = '/home'; // redirect as needed 
         }
-        window.location.href = '/home'; // redirect as needed 
       } else {
         toast.error(`Registration failed: ${response.data.error || 'Unknown error'}`);
       }
     } catch (error) {
       toast.error("Registration failed: " + (error.response?.data?.error || "Network error"));
     }
-  }
+  };
 
   return (
     <form className="register" onSubmit={handleSubmit}>

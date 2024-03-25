@@ -104,13 +104,41 @@ app.get('/home/:username', async (req, resp) => {
   }
   try {
     const result = await lib.getUser(db, req.params.username);
-    console.log(username);
     return resp.json({ message: `Welcome to Budgify ${username} !` })
   } catch (err) {
     return resp.status(500).json({ error: `try again later with ${err}` });
   }
 });
 
+// hardcode credit card
+app.post('/addcc', async (req, resp) => {
+  const username = req.body.username;
+  console.log(username);
+  if (username == 'arushis') {
+    await lib.addCc(db, username); 
+    return resp.status(200).json({ message: 'Credit card info updated for user ', user: req.session.user });
+  } else if (username == 'jwang') {
+    await lib.addCc(db, username); 
+    return resp.status(200).json({ message: 'Credit card info updated for user ', user: req.session.user });
+  } else if (username == 'riakul') {
+    await lib.addCc(db, username); 
+    return resp.status(200).json({ message: 'Credit card info updated for user ', user: req.session.user });
+  }
+});
+
+app.post('/save-preferences', async (req, res) => {
+  const preferencesData = req.body;
+
+  // Assuming you have a unique identifier for the user (e.g., username)
+  const username = preferencesData.username; 
+
+  // Call the async function to save preferences
+  await lib.savePreferences(db, preferencesData);
+
+  // Send the result as JSON response
+  // res.json(result);
+  return res.status(201).json({ message: 'Saved preferences for user: ', username });
+});
 
 // User
 app.post('/adduser', async (req, resp) => {
@@ -123,22 +151,13 @@ app.post('/adduser', async (req, resp) => {
   newUser.username = req.body.username;
   newUser.password = hashedPassword;
   await lib.addUser(db, newUser, req.body.username); 
-  return resp.status(201).json({ message: `User added with username ${req.body.username}` });
-});
-
-// hardcode credit card
-app.post('/addcc', async (req, resp) => {
-  const username = req.body.username;
-  if (username == 'arushis') {
-    await lib.addCc(db, username); 
-    return resp.status(200).json({ message: `Credit card info udpated for user ${username}` });
-  } else if (username == 'jwang') {
-    await lib.addCc(db, username); 
-    return resp.status(200).json({ message: `Credit card info udpated for user ${username}` });
-  } else if (username == 'riakul') {
-    await lib.addCc(db, username); 
-    return resp.status(200).json({ message: `Credit card info udpated for user ${username}` });
-  }
+  req.session.user = { 
+    username: req.body.username, 
+    email: req.body.email,
+    firstName: req.body.firstName, 
+    lastName: req.body.lastName
+  };
+  return resp.status(201).json({ message: 'Registration successful', user: req.session.user });
 });
 
 // login
@@ -158,7 +177,7 @@ app.post('/login', async (req, res) => {
       res.json({ message: "Login successful", user: req.session.user });
     } else {
       // invalid password
-      console.log("Invalid {assword");
+      console.log("Invalid Password");
       res.status(401).json({ error: "Invalid Password" });
     }
   } else {
@@ -353,18 +372,7 @@ app.post('/analyzeCreditCards', async (req, res) => {
   }
 });
 
-app.post('/save-preferences', async (req, res) => {
-  const preferencesData = req.body;
 
-  // Assuming you have a unique identifier for the user (e.g., username)
-  const username = 'riakul'; // Change this to the actual username
-
-  // Call the async function to save preferences
-  const result = await lib.savePreferences(preferencesData, username);
-
-  // Send the result as JSON response
-  res.json(result);
-});
 
 app.post('/getTopCreditCards', async (req, res) => {
   try {
