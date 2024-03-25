@@ -16,32 +16,32 @@ function BudgetGraphs() {
 
   const [budgetData, setBudgetData] = useState(null);
   const [showData, setShowData] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState();
-  const [loggedInUser, setLoggedInUser] = useState('riakul');
+  const [selectedMonth, setSelectedMonth] = useState('');
   const [graphData, setGraphData] = useState();
 
+  const loggedInUser = sessionStorage.getItem('username');
   const months = [
-    { name: 'January', value: 1 },
-    { name: 'February', value: 2 },
-    { name: 'March', value: 3 },
-    { name: 'April', value: 4 },
-    { name: 'May', value: 5 },
-    { name: 'June', value: 6 },
-    { name: 'July', value: 7 },
-    { name: 'August', value: 8 },
-    { name: 'September', value: 9 },
-    { name: 'October', value: 10 },
-    { name: 'November', value: 11 },
-    { name: 'December', value: 12 }
+    { name: 'January', value: '01' },
+    { name: 'February', value: '02' },
+    { name: 'March', value: '03' },
+    { name: 'April', value: '04' },
+    { name: 'May', value: '05' },
+    { name: 'June', value: '06' },
+    { name: 'July', value: '07' },
+    { name: 'August', value: '08' },
+    { name: 'September', value: '09' },
+    { name: 'October', value: '10' },
+    { name: 'November', value: '11' },
+    { name: 'December', value: '12' }
   ];
 
   const buildGraphData = () => {
     if (budgetData) {
-      let formattedMonth=12
-      if(selectedMonth <10)
-         formattedMonth = '0'+selectedMonth;
+      // let formattedMonth=12
+      // if(selectedMonth <10)
+      //    formattedMonth = '0'+selectedMonth;
 
-      const filteredData = budgetData.budget_spending[formattedMonth];
+      const filteredData = budgetData.budget_spending[selectedMonth];
       const labels = Object.keys(filteredData);
       const dataValues = Object.values(filteredData);
       console.log(dataValues);
@@ -75,7 +75,7 @@ function BudgetGraphs() {
   }
 
   const handleChange = (e) => {
-    const selectedValue = e.target.value !== null ? parseInt(e.target.value) : 12;
+    const selectedValue = e.target.value !== null ? e.target.value : '12';
     setSelectedMonth(selectedValue);
 
   };
@@ -93,6 +93,7 @@ function BudgetGraphs() {
         };
 
         const response = await axios.post('http://127.0.0.1:5000/budget-spending', requestBody);
+        console.log(JSON.stringify(response.data.budget_spending));
         setBudgetData(response.data);
         buildGraphData();
       } catch (error) {
@@ -108,6 +109,21 @@ function BudgetGraphs() {
     };
   }, [loggedInUser, selectedMonth]); // Dependency array includes the callback function
 
+
+  const ExpenseTable = ({ data, selectedMonth }) => {
+    return (
+      <table>
+        <tbody>
+          {Object.entries(data[selectedMonth]).map(([category, expense]) => (
+            <tr key={category}>
+              <td>{category}</td>
+              <td>${expense.toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
     <div className="layout">
@@ -154,16 +170,11 @@ function BudgetGraphs() {
                             <th>Data</th>
                           </tr>
                         </thead>
-                        {/* {budgetData && budgetData.labels.length > 0 && (
+                        {budgetData && selectedMonth && (
                           <tbody>
-                            {budgetData.labels.map((label, index) => (
-                              <tr key={index}>
-                                <td>{label}</td>
-                                <td>{budgetData.datasets[0].data[index].toFixed(2)}</td>
-                              </tr>
-                            ))}
+                            <ExpenseTable data={budgetData.budget_spending} selectedMonth={selectedMonth} />
                           </tbody>
-                        )} */}
+                        )}
                       </table>
                     </div>
                   </div>

@@ -103,10 +103,20 @@ const updateBudget = async (db, username, budget) => {
         throw new Error(`cannot update budget for user ${username}`);
     }
 }
-async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
+async function getTop5AmountsPerCategoryItem(db, desiredMonth, user) {
   const transactionsCollection = db.collection('transactions');
+  console.log("user db: ", user);
 
   const top5PerCategoryItem = await transactionsCollection.aggregate([
+    {
+      $match: {
+        username: user, // Filter transactions by the logged-in user
+        transaction_date: {
+          $gte: new Date(desiredMonth.getFullYear(), desiredMonth.getMonth(), 1).toISOString().split('T')[0], // Start of the desired month
+          $lt: new Date(desiredMonth.getFullYear(), desiredMonth.getMonth() + 1, 1).toISOString().split('T')[0], // Start of the next month
+        },
+      },
+    },
     {
       $addFields: {
         transaction_date: {
@@ -115,16 +125,6 @@ async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
             then: { $toDate: '$transaction_date' },
             else: '$transaction_date',
           },
-        },
-      },
-    },
-    {
-      $match: {
-        $expr: {
-          $and: [
-            { $eq: [{ $year: '$transaction_date' }, desiredMonth.getFullYear()] },
-            { $eq: [{ $month: '$transaction_date' }, desiredMonth.getMonth() + 1] },
-          ],
         },
       },
     },
@@ -167,7 +167,6 @@ async function getTop5AmountsPerCategoryItem(db, desiredMonth) {
 
   return top5PerCategoryItem;
 }
-
 
 
 

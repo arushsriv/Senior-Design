@@ -11,7 +11,7 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 # MongoDB connection
 # client = MongoClient('mongodb://localhost:27017/')
 client = MongoClient('mongodb+srv://juliwang:seniordesign@cluster0.xrkdlnk.mongodb.net/?retryWrites=true&w=majority')
-db = client['seniordesign24']
+db = client['test']
 collection = db['transactions']
 
 # Define schema
@@ -56,10 +56,10 @@ credit_card_schema = {
 @app.route('/card-offers', methods=['POST'])
 def cardOffers():
     data = request.get_json()
-    user_id = data.get('user_id')
+    user_id = data.get('username')
     transactions = list(collection.find({'user_id': user_id}))  # Retrieve transactions for the user
     analyzer = TransactionAnalyzer(transactions)  # Assuming transactions is a DataFrame
-    predicted_spending = analyzer.budget_breakdown();
+    predicted_spending = analyzer.budget_breakdown()
     return jsonify({'budget_spending': predicted_spending}), 200
 
 
@@ -67,7 +67,7 @@ def cardOffers():
 def getBudgetByMonth():
     data = request.get_json()
     user_id = data.get('user_id')
-    transactions = list(collection.find({'user_id': user_id}))  # Retrieve transactions for the user
+    transactions = list(collection.find({'username': user_id}))  # Retrieve transactions for the user
     analyzer = TransactionAnalyzer(transactions)  # Assuming transactions is a DataFrame
     predicted_spending = analyzer.budget_breakdown();
     return jsonify({'budget_spending': predicted_spending}), 200
@@ -75,21 +75,21 @@ def getBudgetByMonth():
 
 def read_transactions_for_user(user_id):
     data = request.get_json()
-    user_id = data.get('user_id')
+    user_id = data.get('username')
     # desired_month = data.get('desired_month')
-    transactions = list(collection.find({'user_id': user_id}))  # Retrieve transactions for the user
+    transactions = list(collection.find({'username': user_id}))  # Retrieve transactions for the user
     # Convert date strings to datetime objects
     for transaction in transactions:
-        transaction['transactionDate'] = datetime.datetime.strptime(transaction['transactionDate'], '%Y-%m-%d')
-        transaction['postedDate'] = datetime.datetime.strptime(transaction['postedDate'], '%Y-%m-%d')
-        transaction['month'] = transaction['transactionDate'].month
+        transaction['transaction_date'] = datetime.datetime.strptime(transaction['transaction_date'], '%Y-%m-%d')
+        # transaction['postedDate'] = datetime.datetime.strptime(transaction['postedDate'], '%Y-%m-%d')
+        transaction['month'] = transaction['transaction_date'].month
     return transactions
 
 @app.route('/predict-spending', methods=['POST'])
 def predict_spending_route():
     data = request.get_json()
-    user_id = data.get('user_id')
-    desired_month = 12
+    user_id = data.get('username')
+    desired_month = 11
     transactions = read_transactions_for_user(user_id)
     analyzer = TransactionAnalyzer(transactions)  # Assuming transactions is a DataFrame
     predicted_spending = analyzer.predict_spending(desired_month)

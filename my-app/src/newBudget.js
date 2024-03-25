@@ -17,10 +17,10 @@ function NewBudget() {
   const [budgetData, setBudgetData] = useState(null);
   const [showData, setShowData] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState();
-  const [loggedInUser] = useState('riakul');
   const [overallBudget, setOverallBudget] = useState(500)
 
-
+  const loggedInUser = sessionStorage.getItem('username');
+  console.log('newBudget user: ', loggedInUser);
   useEffect(() => {
     // Function to fetch data from the web service
     const fetchData = async () => {
@@ -28,7 +28,7 @@ function NewBudget() {
       setSelectedMonth(today.getMonth() - 1);
       try {
         const requestBody = {
-          user_id: loggedInUser,
+          username: loggedInUser,
           desired_month: selectedMonth
         };
 

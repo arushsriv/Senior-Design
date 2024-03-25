@@ -14,14 +14,12 @@ const MonthlyBreakdown = () => {
     const today = new Date();
     const firstDayOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
     const formattedDate = `${firstDayOfLastMonth.getFullYear()}-${(firstDayOfLastMonth.getMonth() + 1).toString().padStart(2, '0')}-01`;
-    console.log(formattedDate)
-    console.log(typeof(formattedDate))
+    const user = sessionStorage.getItem('username')
+    console.log('user: ', user);
     const fetchTop5Data = async () => {
-      console.log('fetch')
       try {
-        console.log('fetch2')
-        const response = await axios.get(`http://localhost:8080/top5/${formattedDate}`);
-        console.log('API Response:', response);
+        const response = await axios.get(`http://localhost:8080/top5/${user}/${formattedDate}`);
+        console.log('formatted date: ', formattedDate)
         setTop5Data(response.data.top5Data);
         console.log('top5Data:', response.data.top5Data);
       } catch (error) {
@@ -31,7 +29,6 @@ const MonthlyBreakdown = () => {
   
     fetchTop5Data();
   }, []); // Empty dependency array ensures the effect runs only once when the component mounts
-  console.log('top5Data outside useEffect:', top5Data);
   return (
     <div className="layout">
       <header>

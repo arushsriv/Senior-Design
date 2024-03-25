@@ -17,10 +17,12 @@ class TransactionAnalyzer:
             monthly_spending = defaultdict(lambda: defaultdict(float))
             
             for transaction in self.transactions:
-                month = transaction['transactionDate'].split('-')[1]
+                month = transaction['transaction_date'].split('-')[1]
                 category = transaction['Category']
                 amount = transaction['Debit']
-                monthly_spending[month][category] += amount
+                #RiaK if amount has string it will produce error fixed by converting it to int
+                if amount != '':
+                    monthly_spending[month][category] += amount
 
             # Calculate total spending per month
             monthly_totals = {month: sum(categories.values()) for month, categories in monthly_spending.items()}
@@ -50,7 +52,7 @@ class TransactionAnalyzer:
     def predict_spending(self, desired_month):
         
         df = pd.DataFrame(self.transactions)
-        filtered_transactions = df[df['month'] == desired_month]
+        filtered_transactions = df[(df['month'] == desired_month)]
         monthly_spending = filtered_transactions.groupby('Category')['Debit'].sum().reset_index()
         models = {}
         for category in monthly_spending['Category']:

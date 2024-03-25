@@ -278,11 +278,23 @@ app.post('/updatebudget', async (req, resp) => {
 })
 
 // Get top 5 amounts per category item endpoint
-app.get('/top5/:month', async (req, res) => {
+app.get('/top5/:username/:month', async (req, res) => {
+  console.log('in here')
   try {
+    // Log the request parameters for debugging
+    console.log('Request parameters:', req.params);
 
     const desiredMonth = new Date(req.params.month); // Assuming req.params.month is a string like '2024-02-01'
-    const top5Data = await lib.getTop5AmountsPerCategoryItem(db, desiredMonth);
+    const user = req.params.username;
+
+    // Log the desired month and username for debugging
+    console.log('Desired month:', desiredMonth);
+    console.log('Username:', user);
+
+    const top5Data = await lib.getTop5AmountsPerCategoryItem(db, desiredMonth, user);
+
+    // Log the retrieved top5Data for debugging
+    console.log('Top 5 data:', top5Data);
 
     res.json({ top5Data });
   } catch (error) {
