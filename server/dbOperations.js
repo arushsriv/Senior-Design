@@ -22,7 +22,7 @@ const getUser = async (db, username) => {
     throw err; 
   }
 }
-
+/*
 const savePreferences = async (db, preferencesData) => {
   try {
     // Find the user by username and update preferences
@@ -41,6 +41,7 @@ const savePreferences = async (db, preferencesData) => {
     // return { success: false, message: 'Error saving preferences' };
   }
 };
+*/
 
 // User
 const addUser = async (db, newUser) => {
@@ -197,6 +198,8 @@ const savePreferences = async (preferencesData, username) => {
       { $set: preferencesData },
       { upsert: true }
     );
+  }
+}
 
 
 async function getTopCreditCards(db, req) {
