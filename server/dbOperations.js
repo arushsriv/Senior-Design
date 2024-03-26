@@ -292,12 +292,12 @@ const addCc = async (db, username) => {
           cc_url: "https://www.citi.com/credit-cards/citi-secured-credit-card",
           cc_imageurl: "https://www.citi.com/CRD/images/citi-secured-card/citi-secured-card_222x140.png"
         }, {
-          cc_name: "AARP Essential Rewards",
-          cc_issuer: "BARCLAYS",
-          cc_network: "MASTERCARD",
-          cc_currency: "USD",
-          cc_url: "https://cards.barclaycardus.com/banking/cards/aarp-essential-rewards-mastercard/",
-          cc_imageurl: "https://offeroptimist.com/images/barclays/aarp-essential-rewards.png"
+          cc_name: "Everyday",
+          cc_issuer: "AMERICAN_EXPRESS",
+          cc_network: "AMERICAN_EXPRESS",
+          cc_currency: "AMERICAN_EXPRESS",
+          cc_url: "https://www.americanexpress.com/us/credit-cards/card/amex-everyday/",
+          cc_imageurl: "https://offeroptimist.com/images/amex/everyday.png"
         }
       ];
       const result = await db.collection('users').updateOne(
@@ -312,12 +312,12 @@ const addCc = async (db, username) => {
     try {
       const ccInfo = [
         {
-          cc_name: "Everyday",
-          cc_issuer: "AMERICAN_EXPRESS",
-          cc_network: "AMERICAN_EXPRESS",
-          cc_currency: "AMERICAN_EXPRESS",
-          cc_url: "https://www.americanexpress.com/us/credit-cards/card/amex-everyday/",
-          cc_imageurl: "https://offeroptimist.com/images/amex/everyday.png"
+          cc_name: "AARP Essential Rewards",
+          cc_issuer: "BARCLAYS",
+          cc_network: "MASTERCARD",
+          cc_currency: "USD",
+          cc_url: "https://cards.barclaycardus.com/banking/cards/aarp-essential-rewards-mastercard/",
+          cc_imageurl: "https://offeroptimist.com/images/barclays/aarp-essential-rewards.png"
         }, {
           cc_name: "Blue Cash Preferred",
           cc_issuer: "AMERICAN_EXPRESS",

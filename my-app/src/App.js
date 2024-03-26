@@ -3,7 +3,7 @@ import Preferences from './Preferences';
 import Register from './Register';
 import Login from './Login';
 import CardOffers from './cardOffers';
-import MainPage from './mainPage';
+import MainPage from './MainPage';
 import MonthlyBreakdown from './MonthlyBreakdown';
 import Profile from './Profile';
 import Plaid from './Plaid';
