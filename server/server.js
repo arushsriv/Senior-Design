@@ -231,6 +231,7 @@ app.get('/getpreferences/:username', async (req, resp) => {
   }
   try {
     const result = await lib.getPreferences(db, req.params.username);
+    console.log('server response result: ', result);
     return resp.status(200).json({ data: result });
   } catch (err) {
     return resp.status(500).json({ error: `try again later with ${err}` });

@@ -71,11 +71,11 @@ const addPreferences = async (db, username, preferences) => {
     }
 }
 
-const getPreferences = async (db, username) => {
+const getPreferences = async (db, user) => {
     try {
-        const result = await getUser(db, username);
+        const result = db.collection('preferences').findOne({username: user});
         console.log("get preference result: ", result);
-        return result.preferences;
+        return result;
     } catch (err) {
         throw new Error(`cannot get preferences for user ${username}`);
     }
@@ -196,17 +196,23 @@ async function getTopCreditCards(db, req) {
   // User input variables
   const {
     debtToIncomeRatio,
-    averageTotalMonthlyBalance,
     newCards,
     annualFeePreference,
-    bonusWeight,
     annualFeeLimit,
+    bonusWeight,
+    averageTotalMonthlyBalance,
     ficoScore,
     highSpendingCategories,
     preferredStoresTravelPartners,
   } = req.body;
+  console.log('req.body db: ', req.body);
 
+  console.log("bonusWiehgt: ", bonusWeight);
+  console.log("req.body.bonusWeight: ", req.body.bonusWeight);
   try {
+    if (isNaN(bonusWeight)) {
+      throw new Error("Input is null");
+    }
     if (isNaN(bonusWeight) || bonusWeight < 0 || bonusWeight > 1) {
       throw new Error("Input is not a valid number between 0 and 1.");
     }
